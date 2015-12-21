@@ -1,0 +1,61 @@
+<!DOCTYPE aspectj PUBLIC
+        "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+	<!-- https://www.eclipse.org/aspectj/doc/next/devguide/ltw-configuration.html -->
+    <weaver options="-verbose -showWeaveInfo -XnoInline -Xlintfile:gov/nasa/jpl/magicdraw/lint.properties">
+        <!-- only weave classes in this package -->
+
+		<!-- 
+		 weaveinfo Join point 'method-execution(
+		 	void gov.nasa.jpl.magicdraw.enhanced.ui.browser.EnhancedBrowserContextAMConfigurator.configure(
+		 		com.nomagic.actions.ActionsManager, 
+		 		com.nomagic.magicdraw.ui.browser.Tree))' 
+		 in Type 'gov.nasa.jpl.magicdraw.enhanced.ui.browser.EnhancedBrowserContextAMConfigurator' 
+		 (EnhancedBrowserContextAMConfigurator.scala:78)
+		 advised by around advice from 
+		 'gov.nasa.jpl.magicdraw.advice.ui.browser.EnhanceBrowserContextConfiguratorWithShowPopupMenuAdvice' 
+		 (EnhanceBrowserContextConfiguratorWithShowPopupMenuAdvice.java) 
+		 [with runtime test]
+		 -->
+        <include within="gov.nasa.jpl.magicdraw.enhanced.ui.browser.EnhancedBrowserContextAMConfigurator" />
+        <include within="gov.nasa.jpl.magicdraw.advice.ui.browser.EnhanceBrowserContextConfiguratorWithShowPopupMenuAdvice" />      
+        
+        <include within="com.nomagic.magicdraw.ui.browser.*" />
+        
+        <!-- 
+         weaveinfo Join point 'constructor-call(
+         	void com.nomagic.magicdraw.ui.states.SymbolDrawState.<init>(
+         		com.nomagic.magicdraw.ui.DiagramCanvas, 
+         		com.nomagic.magicdraw.uml.symbols.PresentationElement, 
+         		com.nomagic.magicdraw.uml.symbols.manipulators.SymbolDrawManipulator))' 
+         in Type 'com.nomagic.magicdraw.ui.actions.DrawPathDiagramAction' 
+         (DrawPathDiagramAction.java:71) 
+         advised by around advice from 
+         'gov.nasa.jpl.magicdraw.advice.actions.paths.EnhancedDrawDynamicPathActionCreateState' 
+         (EnhancedDrawDynamicPathActionCreateState.java) 
+         [with runtime test]
+         -->
+        <include within="com.nomagic.magicdraw.ui.actions.DrawPathDiagramAction" />
+        <include within="gov.nasa.jpl.magicdraw.advice.actions.paths.EnhancedDrawDynamicPathActionCreateState" />
+        
+        <!-- 
+         weaveinfo Join point 'method-execution(
+         	com.nomagic.magicdraw.ui.states.State gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction.createState())' 
+        	 in Type 'gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction' (EnhancedDrawPathAction.scala:99) 
+        	 advised by around advice from 'gov.nasa.jpl.magicdraw.advice.actions.paths.EnhancedDrawDynamicPathActionCreateState' (EnhancedDrawDynamicPathActionCreateState.java)
+          -->
+        <include within="gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction" />
+            
+        <include within="gov.nasa.jpl.magicdraw.enhanced.persistence.EnhancedURIResolverToPhysicalURI" />
+        <include within="com.nomagic.magicdraw.persistence.URIResolver" />
+        
+        <dump within="*" />
+        
+    </weaver>
+    <aspects>
+        <!-- use only this aspect for weaving -->
+        <aspect name="gov.nasa.jpl.magicdraw.advice.ui.browser.EnhanceBrowserContextConfiguratorWithShowPopupMenuAdvice" />
+        <aspect name="gov.nasa.jpl.magicdraw.advice.actions.paths.EnhancedDrawDynamicPathActionCreateState" />
+        <aspect name="gov.nasa.jpl.magicdraw.enhanced.persistence.EnhancedURIResolverToPhysicalURI" />
+    </aspects>
+</aspectj>
