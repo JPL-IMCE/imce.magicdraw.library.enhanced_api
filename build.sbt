@@ -114,9 +114,6 @@ lazy val updateInstall = TaskKey[Unit]("update-install", "Update the MD Installa
 val mdk_package_ID = "gov.nasa.jpl.cae.magicdraw.packages" % Versions.mdk_package_N % Versions.mdk_package_V
 val mdk_package_A = Artifact(mdk_package_ID.name, "zip", "zip")
 
-val aspectj_scala_package_ID = "gov.nasa.jpl.cae.magicdraw.packages" % Versions.aspectj_scala_package_N % Versions.aspectj_scala_package_V
-val aspectj_scala_package_A = Artifact(aspectj_scala_package_ID.name, "zip", "zip")
-
 lazy val enhancedLib = Project("enhancedLib", file("enhancedLib"))
     .enablePlugins(GitVersioning)
     .enablePlugins(GitBranchPrompt)
@@ -248,9 +245,10 @@ lazy val core = Project("root", file("."))
   .aggregate(enhancedLib)
   .dependsOn(enhancedLib)
   .settings(artifactZipFile := { baseDirectory.value / "target" / "package" / Versions.aspectj_scala_package_Z })
-  .settings(addArtifact( aspectj_scala_package_A, artifactZipFile ).settings: _*)
-  .settings(moduleSettings(aspectj_scala_package_ID): _*)
+  .settings(addArtifact( Artifact(Versions.aspectj_scala_package_N, "zip", "zip"), artifactZipFile ).settings: _*)
   .settings(
+    organization := "gov.nasa.jpl.cae.magicdraw.packages",
+    name := Versions.aspectj_scala_package_N,
     homepage := Some(url("https://github.jpl.nasa.gov/mbee-dev/" + Versions.aspectj_scala_package_P)),
     organizationHomepage := Some(url("http://cae.jpl.nasa.gov")),
 
@@ -270,9 +268,10 @@ lazy val core = Project("root", file("."))
         artifactZipFile,
         packageBin in Compile in enhancedLib, // enhancedLib's jar file
         packageSrc in Compile in enhancedLib, // enhancedLib's sources file
-        packageDoc in Compile in enhancedLib  // enhancedLib's javadoc file
+        packageDoc in Compile in enhancedLib, // enhancedLib's javadoc file
+        version
       ) map {
-      (base, up, s, mdInstallDir, zip, enhancedLibJar, enhancedLibSrc, enhancedLibDoc) =>
+      (base, up, s, mdInstallDir, zip, enhancedLibJar, enhancedLibSrc, enhancedLibDoc, buildVersion) =>
 
         s.log.info(s"Updating md.install.dir=$mdInstallDir")
 
@@ -362,7 +361,7 @@ lazy val core = Project("root", file("."))
           val patchedContents5 = patchedContents4.replaceFirst("(JAVA_ARGS=.*)",
             "$1 -DLOCALCONFIG\\\\=true "+
             "-DWINCONFIG\\\\=true "+
-            "-Dlocal.config.dir.ext\\\\=" + Versions.aspectj_scala_package_B)
+            "-Dlocal.config.dir.ext\\\\=-" + Versions.aspectj_scala_package_B + buildVersion)
 
           val patchedContents6 = patchedContents5.replaceFirst("BOOT_CLASSPATH=(.*)",
             "BOOT_CLASSPATH="+bootClasspathPrefix+"$1")
@@ -374,6 +373,10 @@ lazy val core = Project("root", file("."))
         }
 
         s.log.info(s"\n# Creating the zip: $zip")
+        val mdInstallDirVersion: File =
+          mdInstallDir.getParentFile / (mdInstallDir.name + Versions.aspectj_scala_package_B + buildVersion)
+        IO.move(mdInstallDir, mdInstallDirVersion)
+        IO.move(mdInstallDirVersion, mdInstallDir / (Versions.aspectj_scala_package_B + buildVersion))
         IO.zip(allSubpaths(mdInstallDir), zip)
 
         zip

@@ -21,6 +21,5 @@ object Versions {
   val aspectj_scala_package_P = cae_md_package_P_prefix + ".aspectj_scala"
   val aspectj_scala_package_Z = cae_artifact_file_prefix + ".aspectj_scala.zip"
   val aspectj_scala_package_N = cae_md_package_N_prefix + "_aspectj_scala"
-  val aspectj_scala_package_B = "-aspectj_scala-build-"+sys.props.getOrElse("BUILD_NUMBER", "1")
-  val aspectj_scala_package_V = "1.0"
+  val aspectj_scala_package_B = "aspectj_scala-build-"+sys.props.getOrElse("BUILD_NUMBER", "1")+"-"
 }
