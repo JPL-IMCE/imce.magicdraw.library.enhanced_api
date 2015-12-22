@@ -1,6 +1,8 @@
 import java.io.File
 import java.nio.file.Files
 
+import com.typesafe.sbt.SbtGit
+import com.typesafe.sbt.git.{ReadableGit, DefaultReadableGit}
 import sbt._
 import Keys._
 
@@ -9,6 +11,9 @@ import com.typesafe.sbt.SbtAspectj.AspectjKeys._
 
 import org.apache.ivy.core.module.descriptor.{DependencyDescriptor, ModuleDescriptor}
 import org.apache.ivy.util.extendable.ExtendableItem
+
+import scala.xml.{Node => XNode}
+import scala.xml.transform._
 
 import scala.collection.JavaConversions._
 
@@ -109,18 +114,37 @@ lazy val extractArchives = TaskKey[Seq[Attributed[File]]]("extract-archives", "E
 
 lazy val updateInstall = TaskKey[Unit]("update-install", "Update the MD Installation directory")
 
+lazy val md5Install = TaskKey[Unit]("md5-install", "Produce an MD5 report of the MD Installation directory")
+
+lazy val zipInstall = TaskKey[File]("zip-install", "Zip the MD Installation directory")
+
+// from sbt-git
+lazy val gitReader = SettingKey[ReadableGit]("git-reader", "This gives us a read-only view of the git repository.")
+lazy val gitCurrentBranch = SettingKey[String]("git-current-branch", "The current branch for this project.")
+lazy val gitCurrentTags = SettingKey[Seq[String]]("git-current-tags", "The tags associated with this commit.")
+lazy val gitHeadCommit = SettingKey[Option[String]]("git-head-commit", "The commit sha for the top commit of this project.")
+lazy val gitDescribedVersion = SettingKey[Option[String]]("git-described-version", "Version as returned by `git describe --tags`.")
+lazy val gitUncommittedChanges = SettingKey[Boolean]("git-uncommitted-changes", "Whether there are uncommitted changes.")
 
 // step1
 val mdk_package_ID = "gov.nasa.jpl.cae.magicdraw.packages" % Versions.mdk_package_N % Versions.mdk_package_V
 val mdk_package_A = Artifact(mdk_package_ID.name, "zip", "zip")
 
 lazy val enhancedLib = Project("enhancedLib", file("enhancedLib"))
-    .enablePlugins(GitVersioning)
     .enablePlugins(GitBranchPrompt)
     .settings(aspectjSettings : _*)
     .settings(
+      gitReader := new DefaultReadableGit(baseDirectory.value.getParentFile),
+      gitCurrentBranch := Option(gitReader.value.withGit(_.branch)).getOrElse(""),
+      gitCurrentTags := gitReader.value.withGit(_.currentTags),
+      gitHeadCommit := gitReader.value.withGit(_.headCommitSha),
+      gitDescribedVersion := gitReader.value.withGit(_.describedVersion).map(v => git.gitTagToVersionNumber.value(v).getOrElse(v)),
+      gitUncommittedChanges := gitReader.value.withGit(_.hasUncommittedChanges),
+
       homepage := Some(url("https://github.jpl.nasa.gov/mbee-dev/" + Versions.aspectj_scala_package_P)),
       organizationHomepage := Some(url("http://cae.jpl.nasa.gov")),
+
+      version := Versions.aspectj_scala_package_B,
 
       // Map artifact ModuleID to a Maven-style path for publishing/lookup on the repo
       publishMavenStyle := true,
@@ -140,8 +164,12 @@ lazy val enhancedLib = Project("enhancedLib", file("enhancedLib"))
       makePomConfiguration :=
         makePomConfiguration.value.copy(includeTypes = Set(Artifact.DefaultType, Artifact.PomType, "zip")),
 
-      git.baseVersion := Versions.cae_md_package_N_prefix,
-      git.useGitDescribe := true,
+      pomExtra :=
+        <properties>
+          <git.branch>{gitCurrentBranch.value}</git.branch>
+          <git.commit>{gitHeadCommit.value.getOrElse("N/A")+(if (gitUncommittedChanges.value) "-SNAPSHOT" else "")}</git.commit>
+          <git.tags>{gitCurrentTags.value}</git.tags>
+        </properties>,
 
       organization := "gov.nasa.jpl.cae.magicdraw.libraries",
 
@@ -209,7 +237,8 @@ lazy val enhancedLib = Project("enhancedLib", file("enhancedLib"))
           Versions.org_aspectj_version % "compile" withSources() withJavadoc()
       ),
 
-      extractArchives <<= (baseDirectory, update, streams, mdInstallDirectory in ThisBuild) map {
+      extractArchives <<= (baseDirectory, update, streams,
+                           mdInstallDirectory in ThisBuild) map {
         (base, up, s, mdInstallDir) =>
 
           if (!mdInstallDir.exists) {
@@ -229,7 +258,9 @@ lazy val enhancedLib = Project("enhancedLib", file("enhancedLib"))
             jar <- Files.walk(libPath).iterator().filter(_.toString.endsWith(".jar")).map(_.toFile)
           } yield Attributed.blank(jar)
 
-          mdJars.toSeq
+
+
+        mdJars.toSeq
       },
 
       unmanagedJars in Compile <++= extractArchives,
@@ -238,8 +269,67 @@ lazy val enhancedLib = Project("enhancedLib", file("enhancedLib"))
     )
     .settings(aspectjDependencySettings : _*)
 
+def UpdateProperties(mdInstall: File): RewriteRule = {
+
+  println(s"update properties for md.install=$mdInstall")
+  val binDir = mdInstall / "bin"
+  require(binDir.exists, binDir)
+  val binSub = MD5SubDirectory(
+    name="bin",
+    files=IO.listFiles(binDir, GlobFilter("*.properties")).sorted.map(MD5.md5File(binDir)))
+
+  val docGenScriptsDir = mdInstall / "DocGenUserScripts"
+  require(docGenScriptsDir.exists, docGenScriptsDir)
+  val scriptsSub = MD5SubDirectory(
+    name="DocGenUserScripts",
+    dirs=IO.listFiles(docGenScriptsDir,DirectoryFilter).sorted.map(MD5.md5Directory(docGenScriptsDir)))
+
+  val libDir = mdInstall / "lib"
+  require(libDir.exists, libDir)
+  val libSub = MD5SubDirectory(
+    name="lib",
+    files=IO.listFiles(libDir, GlobFilter("*.jar")).sorted.map(MD5.md5File(libDir)))
+
+  val pluginsDir = mdInstall / "plugins"
+  require(pluginsDir.exists)
+  val pluginsSub = MD5SubDirectory(
+    name="plugins",
+    dirs=IO.listFiles(pluginsDir,DirectoryFilter).sorted.map(MD5.md5Directory(pluginsDir)))
+
+  val modelsDir = mdInstall / "modelLibraries"
+  require(modelsDir.exists, libDir)
+  val modelsSub = MD5SubDirectory(
+    name="modelLibraries",
+    files=IO.listFiles(modelsDir, GlobFilter("*.mdzip") || GlobFilter("*.mdxml")).sorted.map(MD5.md5File(modelsDir)))
+
+  val profilesDir = mdInstall / "profiles"
+  require(profilesDir.exists, libDir)
+  val profilesSub = MD5SubDirectory(
+    name="profiles",
+    files=IO.listFiles(profilesDir, GlobFilter("*.mdzip") || GlobFilter("*.mdxml")).sorted.map(MD5.md5File(profilesDir)))
+
+  val samplesDir = mdInstall / "samples"
+  require(samplesDir.exists, libDir)
+  val samplesSub = MD5SubDirectory(
+    name="samples",
+    files=IO.listFiles(samplesDir, GlobFilter("*.mdzip") || GlobFilter("*.mdxml")).sorted.map(MD5.md5File(samplesDir)))
+
+  val all = MD5SubDirectory(".", sub=Seq(binSub, libSub, pluginsSub, modelsSub, profilesSub, samplesSub))
+
+  new RewriteRule {
+    import spray.json._
+    import MD5JsonProtocol._
+
+    override def transform(n: XNode): Seq[XNode] = n match {
+      case <md5/> =>
+        <md5>{all.toJson}</md5>
+      case _ =>
+        n
+    }
+  }
+}
+
 lazy val core = Project("root", file("."))
-  .enablePlugins(GitVersioning)
   .enablePlugins(GitBranchPrompt)
   .settings(noSourcesSettings)
   .aggregate(enhancedLib)
@@ -247,20 +337,47 @@ lazy val core = Project("root", file("."))
   .settings(artifactZipFile := { baseDirectory.value / "target" / "package" / Versions.aspectj_scala_package_Z })
   .settings(addArtifact( Artifact(Versions.aspectj_scala_package_N, "zip", "zip"), artifactZipFile ).settings: _*)
   .settings(
+    gitReader := new DefaultReadableGit(baseDirectory.value),
+    gitCurrentBranch := Option(gitReader.value.withGit(_.branch)).getOrElse(""),
+    gitCurrentTags := gitReader.value.withGit(_.currentTags),
+    gitHeadCommit := gitReader.value.withGit(_.headCommitSha),
+    gitDescribedVersion := gitReader.value.withGit(_.describedVersion).map(v => git.gitTagToVersionNumber.value(v).getOrElse(v)),
+    gitUncommittedChanges := gitReader.value.withGit(_.hasUncommittedChanges),
+
     organization := "gov.nasa.jpl.cae.magicdraw.packages",
     name := Versions.aspectj_scala_package_N,
     homepage := Some(url("https://github.jpl.nasa.gov/mbee-dev/" + Versions.aspectj_scala_package_P)),
     organizationHomepage := Some(url("http://cae.jpl.nasa.gov")),
 
-    git.baseVersion := Versions.cae_md_package_N_prefix,
-    git.useGitDescribe := true,
+    version := Versions.aspectj_scala_package_B,
 
-    publish <<= publish dependsOn updateInstall,
-    publishLocal <<= publishLocal dependsOn updateInstall,
+    pomExtra :=
+      <properties>
+        <git.branch>{gitCurrentBranch.value}</git.branch>
+        <git.commit>{gitHeadCommit.value.getOrElse("N/A")+(if (gitUncommittedChanges.value) "-SNAPSHOT" else "")}</git.commit>
+        <git.tags>{gitCurrentTags.value}</git.tags>
+        <md5/>
+      </properties>,
 
-    updateInstall <<= updateInstall dependsOn (packageBin in Compile in enhancedLib),
-    updateInstall <<= updateInstall dependsOn (packageSrc in Compile in enhancedLib),
-    updateInstall <<= updateInstall dependsOn (packageDoc in Compile in enhancedLib),
+    pomPostProcess := { (node: XNode) =>
+      new RuleTransformer(UpdateProperties(baseDirectory.value / "cae.md.package"))(node)
+    },
+
+    publish <<= publish dependsOn zipInstall,
+    publishLocal <<= publishLocal dependsOn zipInstall,
+
+    makePom <<= makePom dependsOn md5Install,
+
+    md5Install <<=
+      ( baseDirectory, update, streams,
+        mdInstallDirectory in ThisBuild,
+        version
+        ) map {
+        (base, up, s, mdInstallDir, buildVersion) =>
+
+          s.log.info(s"***(2) MD5 of md.install.dir=$mdInstallDir")
+
+      },
 
     updateInstall <<=
       ( baseDirectory, update, streams,
@@ -273,7 +390,7 @@ lazy val core = Project("root", file("."))
       ) map {
       (base, up, s, mdInstallDir, zip, enhancedLibJar, enhancedLibSrc, enhancedLibDoc, buildVersion) =>
 
-        s.log.info(s"Updating md.install.dir=$mdInstallDir")
+        s.log.info(s"***(1) Updating md.install.dir=$mdInstallDir")
 
         val fileArtifacts = for {
           cReport <- up.configurations
@@ -371,15 +488,23 @@ lazy val core = Project("root", file("."))
 
           IO.write(file=mdPropertyFile, content=patchedContents7, append=false)
         }
+    },
 
-        s.log.info(s"\n# Creating the zip: $zip")
-        val mdInstallDirVersion: File =
-          mdInstallDir.getParentFile / (mdInstallDir.name + Versions.aspectj_scala_package_B + buildVersion)
-        IO.move(mdInstallDir, mdInstallDirVersion)
-        IO.move(mdInstallDirVersion, mdInstallDir / (Versions.aspectj_scala_package_B + buildVersion))
-        IO.zip(allSubpaths(mdInstallDir), zip)
+    zipInstall <<=
+      ( baseDirectory, update, streams,
+        mdInstallDirectory in ThisBuild,
+        artifactZipFile,
+        makePom
+        ) map {
+        (base, up, s, mdInstallDir, zip, pom) =>
 
-        zip
-    }
+          s.log.info(s"\n***(3) Creating the zip: $zip")
+          val mdInstallDirVersion: File =
+            mdInstallDir.getParentFile / (mdInstallDir.name + Versions.aspectj_scala_package_B)
+          IO.move(mdInstallDir, mdInstallDirVersion)
+          IO.move(mdInstallDirVersion, mdInstallDir / (Versions.aspectj_scala_package_B))
+          IO.zip(allSubpaths(mdInstallDir), zip)
+
+          zip
+      }
   )
-
