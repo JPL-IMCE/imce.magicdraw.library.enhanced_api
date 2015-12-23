@@ -45,7 +45,7 @@ shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project
 
 lazy val mdInstallDirectory = SettingKey[File]("md-install-directory", "MagicDraw Installation Directory")
 
-mdInstallDirectory in ThisBuild := (baseDirectory in ThisBuild).value / "cae.md.package"
+mdInstallDirectory in ThisBuild := (baseDirectory in ThisBuild).value / "cae.md.package" /  Versions.aspectj_scala_package_B
 
 cleanFiles <+=
   (baseDirectory in ThisBuild) { base => base / "cae.md.package" }
@@ -360,11 +360,14 @@ lazy val core = Project("root", file("."))
       </properties>,
 
     pomPostProcess := { (node: XNode) =>
-      new RuleTransformer(UpdateProperties(baseDirectory.value / "cae.md.package"))(node)
+      new RuleTransformer(UpdateProperties((mdInstallDirectory in ThisBuild).value))(node)
     },
 
     publish <<= publish dependsOn zipInstall,
+    publish <<= publish dependsOn (publish in enhancedLib),
+
     publishLocal <<= publishLocal dependsOn zipInstall,
+    publishLocal <<= publishLocal dependsOn (publishLocal in enhancedLib),
 
     makePom <<= makePom dependsOn md5Install,
 
@@ -499,11 +502,7 @@ lazy val core = Project("root", file("."))
         (base, up, s, mdInstallDir, zip, pom) =>
 
           s.log.info(s"\n***(3) Creating the zip: $zip")
-          val mdInstallDirVersion: File =
-            mdInstallDir.getParentFile / (mdInstallDir.name + Versions.aspectj_scala_package_B)
-          IO.move(mdInstallDir, mdInstallDirVersion)
-          IO.move(mdInstallDirVersion, mdInstallDir / (Versions.aspectj_scala_package_B))
-          IO.zip(allSubpaths(mdInstallDir), zip)
+          IO.zip(allSubpaths(base / "cae.md.package"), zip)
 
           zip
       }
