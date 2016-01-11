@@ -431,6 +431,9 @@ lazy val core = Project("root", file("."))
             dir.delete()
           }
 
+          val zipDir = zip.getParentFile.toScala
+          Cmds.mkdirs(zipDir)
+
           val zipped: BFile = top.zipTo(zip.toScala)
           s.log.info(s"\n***(3) Created the zip: $zipped")
 
