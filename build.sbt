@@ -75,7 +75,6 @@ lazy val md5Install = TaskKey[Unit]("md5-install", "Produce an MD5 report of the
 lazy val zipInstall = TaskKey[File]("zip-install", "Zip the MD Installation directory")
 
 lazy val enhancedLib = project.in(new File("enhancedLib"))
-  .enablePlugins(IMCEGitPlugin)
   .enablePlugins(IMCEReleasePlugin)
   .settings(
     IMCEKeys.licenseYearOrRange := "2014-2016",
@@ -149,6 +148,7 @@ lazy val enhancedLib = project.in(new File("enhancedLib"))
     sources in (Compile, doc) := Seq.empty,
     publishArtifact in (Compile, packageDoc) := false
   )
+  .enablePlugins(IMCEGitPlugin)
   .settings(IMCEReleasePlugin.libraryReleaseProcessSettings)
   .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
   .settings(IMCEPlugin.aspectJSettings)
@@ -233,7 +233,6 @@ def UpdateProperties(mdInstall: File): RewriteRule = {
 }
 
 lazy val core = Project("root", file("."))
-  .enablePlugins(IMCEGitPlugin)
   .enablePlugins(IMCEReleasePlugin)
   .aggregate(enhancedLib)
   .dependsOn(enhancedLib)
@@ -462,4 +461,5 @@ lazy val core = Project("root", file("."))
           zip
       }
   )
+  .enablePlugins(IMCEGitPlugin)
   .settings(IMCEPlugin.packageLibraryDependenciesWithoutSourcesSettings)
