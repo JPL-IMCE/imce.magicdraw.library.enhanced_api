@@ -1,3 +1,4 @@
+import better.files.{File => BFile, _}
 import java.io.File
 import java.nio.file.Files
 
@@ -422,16 +423,16 @@ lazy val core = Project("root", file("."))
         ) map {
         (base, up, s, mdInstallDir, zip, pom, sbV) =>
 
-          val scalaBinary = "scala-" + sbV
-          s.log.info(s"\n***(3) Creating the zip: $zip (sbV=$scalaBinary)")
-          val filter = new NameFilter() {
-            def accept(name: String) = name match {
-              case scalaBinary => false
-              case _ => true
-            }
+          s.log.info(s"\n***(3) Creating the zip: $zip")
+          val top: BFile = (base / "cae.md.package").toScala
+          val scalaSubDir: Iterator[BFile] = top.glob("*/scala-" + sbV)
+          scalaSubDir.foreach { dir: BFile =>
+            s.log.info(s"* deleting $dir")
+            dir.delete()
           }
-          val allMDSubPaths = selectSubpaths(base / "cae.md.package", filter)
-          IO.zip(allMDSubPaths, zip)
+
+          val zipped: BFile = top.zipTo(zip.toScala)
+          s.log.info(s"\n***(3) Created the zip: $zipped")
 
           zip
       }
