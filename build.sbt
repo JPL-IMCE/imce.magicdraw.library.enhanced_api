@@ -4,6 +4,7 @@ import java.nio.file.Files
 import sbt._
 import Keys._
 
+import com.typesafe.sbt.pgp.PgpKeys
 import com.typesafe.sbt.SbtAspectj._
 import com.typesafe.sbt.SbtAspectj.AspectjKeys._
 
@@ -253,16 +254,27 @@ lazy val core = Project("root", file("."))
 
     git.baseVersion := Versions.version,
 
-    pomPostProcess <<= (pomPostProcess, mdInstallDirectory in ThisBuild) { (previousPostProcess, mdInstallDir) =>
+    pomPostProcess <<= (pomPostProcess, mdInstallDirectory in ThisBuild) {
+      (previousPostProcess, mdInstallDir) =>
       { (node: XNode) =>
+        println(s"original pom:")
+        println(node)
         val processedNode: XNode = previousPostProcess(node)
+        println(s"processed pom:")
+        println(processedNode)
         val mdUpdateDir = UpdateProperties(mdInstallDir)
-        new RuleTransformer(mdUpdateDir)(processedNode)
+        val resultNode: XNode = new RuleTransformer(mdUpdateDir)(processedNode)
+        println(s"result pom:")
+        println(resultNode)
+        resultNode
       }
     },
 
     publish <<= publish dependsOn zipInstall,
+    PgpKeys.publishSigned <<= PgpKeys.publishSigned dependsOn zipInstall,
+
     publish <<= publish dependsOn (publish in enhancedLib),
+    PgpKeys.publishSigned <<= PgpKeys.publishSigned dependsOn (PgpKeys.publishSigned in enhancedLib),
 
     publishLocal <<= publishLocal dependsOn zipInstall,
     publishLocal <<= publishLocal dependsOn (publishLocal in enhancedLib),
@@ -311,7 +323,7 @@ lazy val core = Project("root", file("."))
 
           val jars = {
             val libs = jarArtifacts.map { case (o, _, jar, _) =>
-              s.log.info(s"jar: $o/${jar.name}")
+              s.log.info(s"* copying jar: $o/${jar.name}")
               IO.copyFile(jar, mdInstallDir / "lib" / o / jar.name)
               "lib/" + o + "/" + jar.name
             }
@@ -333,14 +345,14 @@ lazy val core = Project("root", file("."))
           val bootClasspathPrefix = bootJars.mkString("", "\\\\:", "\\\\:")
 
           srcArtifacts.foreach { case (o, _, jar, _) =>
-            s.log.info(s"source: $o/${jar.name}")
+            s.log.info(s"* copying source: $o/${jar.name}")
             IO.copyFile(jar, mdInstallDir / "lib.sources" / o / jar.name)
             "lib.sources/" + o + "/" + jar.name
           }
           IO.copyFile(enhancedLibSrc, mdInstallDir / "lib.sources" / "jpl" / enhancedLibSrc.name)
 
           docArtifacts.foreach { case (o, _, jar, _) =>
-            s.log.info(s"javadoc: $o/${jar.name}")
+            s.log.info(s"* copying javadoc: $o/${jar.name}")
             IO.copyFile(jar, mdInstallDir / "lib.javadoc" / o / jar.name)
             "lib.javadoc/" + o + "/" + jar.name
           }
@@ -395,12 +407,19 @@ lazy val core = Project("root", file("."))
       (baseDirectory, update, streams,
         mdInstallDirectory in ThisBuild,
         artifactZipFile,
-        makePom
+        makePom, scalaBinaryVersion
         ) map {
-        (base, up, s, mdInstallDir, zip, pom) =>
+        (base, up, s, mdInstallDir, zip, pom, sbV) =>
 
           s.log.info(s"\n***(3) Creating the zip: $zip")
-          IO.zip(allSubpaths(base / "cae.md.package"), zip)
+          val filter = new NameFilter() {
+            def accept(name: String) = name match {
+              case "scala" => false
+              case _ => true
+            }
+          }
+          val allMDSubPaths = selectSubpaths(base / "cae.md.package", filter)
+          IO.zip(allMDSubPaths, zip)
 
           zip
       }
