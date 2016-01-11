@@ -447,7 +447,7 @@ lazy val core = Project("root", file("."))
 	    s.log.info(s"* +X $f")
 	    f.addPermission(PosixFilePermission.OWNER_EXECUTE) 
           }
-          val unixExecutables: Iterator[BFile] = top.glob("*/bin/{magicdraw,submit_issue")
+          val unixExecutables: Iterator[BFile] = top.glob("*/bin/{magicdraw,submit_issue}")
           unixExecutables.foreach { f: BFile =>
 	    s.log.info(s"* +X $f")
 	    f.addPermission(PosixFilePermission.OWNER_EXECUTE) 
