@@ -1,16 +1,11 @@
 import java.io.File
 import java.nio.file.Files
 
-import com.typesafe.sbt.SbtGit
-import com.typesafe.sbt.git.{ReadableGit, DefaultReadableGit}
 import sbt._
 import Keys._
 
 import com.typesafe.sbt.SbtAspectj._
 import com.typesafe.sbt.SbtAspectj.AspectjKeys._
-
-import org.apache.ivy.core.module.descriptor.{DependencyDescriptor, ModuleDescriptor}
-import org.apache.ivy.util.extendable.ExtendableItem
 
 import scala.xml.{Node => XNode}
 import scala.xml.transform._
@@ -158,8 +153,6 @@ lazy val enhancedLib = project.in(new File("enhancedLib"))
 
 def UpdateProperties(mdInstall: File): RewriteRule = {
 
-  import gov.nasa.jpl.imce.sbt._
-
   println(s"update properties for md.install=$mdInstall")
   val binDir = mdInstall / "bin"
   require(binDir.exists, binDir)
@@ -217,7 +210,9 @@ def UpdateProperties(mdInstall: File): RewriteRule = {
       .listFiles(samplesDir, GlobFilter("*.mdzip") || GlobFilter("*.mdxml"))
       .sorted.map(MD5.md5File(samplesDir)))
 
-  val all = MD5SubDirectory(".", sub = Seq(binSub, libSub, pluginsSub, modelsSub, profilesSub, samplesSub))
+  val all = MD5SubDirectory(
+    name= ".",
+    sub = Seq(binSub, libSub, pluginsSub, modelsSub, profilesSub, scriptsSub, samplesSub))
 
   new RewriteRule {
 
@@ -258,8 +253,12 @@ lazy val core = Project("root", file("."))
 
     git.baseVersion := Versions.version,
 
-    pomPostProcess := { (node: XNode) =>
-      new RuleTransformer(UpdateProperties((mdInstallDirectory in ThisBuild).value))(node)
+    pomPostProcess <<= (pomPostProcess, mdInstallDirectory in ThisBuild) { (previousPostProcess, mdInstallDir) =>
+      { (node: XNode) =>
+        val processedNode: XNode = previousPostProcess(node)
+        val mdUpdateDir = UpdateProperties(mdInstallDir)
+        new RuleTransformer(mdUpdateDir)(processedNode)
+      }
     },
 
     publish <<= publish dependsOn zipInstall,
@@ -271,7 +270,7 @@ lazy val core = Project("root", file("."))
     makePom <<= makePom dependsOn md5Install,
 
     md5Install <<=
-      (baseDirectory, update, streams,
+      ((baseDirectory, update, streams,
         mdInstallDirectory in ThisBuild,
         version
         ) map {
@@ -279,7 +278,7 @@ lazy val core = Project("root", file("."))
 
           s.log.info(s"***(2) MD5 of md.install.dir=$mdInstallDir")
 
-      },
+      }) dependsOn updateInstall,
 
     updateInstall <<=
       (baseDirectory, update, streams,
