@@ -2,7 +2,7 @@
  *
  * License Terms
  *
- * Copyright (c) 2014-2015, California Institute of Technology ("Caltech").
+ * Copyright (c) 2014-2016, California Institute of Technology ("Caltech").
  * U.S. Government sponsorship acknowledged.
  *
  * All rights reserved.
@@ -46,6 +46,9 @@ import com.nomagic.magicdraw.ui.states.State
 import com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement
 import com.nomagic.magicdraw.uml.symbols.manipulators.drawactions.AdditionalDrawAction
 
+import scala.deprecated
+import scala.Predef.String
+
 /**
   * @BUG : Report the following to NoMagic.
   *
@@ -83,6 +86,7 @@ import com.nomagic.magicdraw.uml.symbols.manipulators.drawactions.AdditionalDraw
   *         for injecting the action's icon into the SymbolDrawState constructor when
   *         EnhancedDrawPathAction.createState() is called.
   */
+@deprecated("", "")
 abstract class EnhancedDrawPathAction
 ( finalizationAction: AdditionalDrawAction,
   diagram: DiagramPresentationElement,

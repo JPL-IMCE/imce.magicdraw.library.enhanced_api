@@ -1,25 +1,14 @@
 object Versions {
 
-  val scala_binary = "2.11"
-  val scala_version = "2.11.7"
-  // Scala library modules
-  val scala_xml_version = "1.0.4"
-  val scala_parser_combinators_version = "1.0.4"
-  val scala_swing_version = "1.0.2"
-  // Scala compiler plugins
-  val scala_continuations_version = "1.0.2"
+  // this project
+  val version = "1.0"
 
-  val cae_md_package_P_prefix = "cae.magicdraw.packages"
-  val cae_md_package_N_prefix = "cae_md18_0_sp5"
-  val cae_artifact_file_prefix = "cae.package"
+  // https://github.jpl.nasa.gov/imce/jpl-mbee-common-scala-libraries
+  val jpl_mbee_common_scala_libraries="1.8"
 
-  val mdk_package_N = cae_md_package_N_prefix + "_mdk"
-  val mdk_package_V = "2.3"
+  // https://github.jpl.nasa.gov/mbee-dev/cae.magicdraw.package.mdk
+  val mdk_package = "2.3-RC1"
 
+  // https://github.jpl.nasa.gov/imce/jpl-mbee-common-scala-libraries/blob/master/project/Versions.scala#L23
   val org_aspectj_version = "1.8.7"
-
-  val aspectj_scala_package_P = cae_md_package_P_prefix + ".aspectj_scala"
-  val aspectj_scala_package_Z = cae_artifact_file_prefix + ".aspectj_scala.zip"
-  val aspectj_scala_package_N = cae_md_package_N_prefix + "_aspectj_scala"
-  val aspectj_scala_package_B = "aspectj_scala-build-"+sys.props.getOrElse("BUILD_NUMBER", "1")
 }

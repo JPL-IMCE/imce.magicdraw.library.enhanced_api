@@ -1,11 +1,20 @@
-logLevel := Level.Warn
+( Option.apply(System.getProperty("JPL_LOCAL_RESOLVE_REPOSITORY")),
+  Option.apply(System.getProperty("JPL_REMOTE_RESOLVE_REPOSITORY")) ) match {
+  case (Some(dir), _) =>
+    if ((new File(dir) / "settings.xml").exists) {
+      val cache = new MavenCache("JPL Resolve", new File(dir))
+      Seq(resolvers += cache)
+    }
+    else
+      sys.error(s"The JPL_LOCAL_RESOLVE_REPOSITORY folder, '$dir', does not have a 'settings.xml' file.")
+  case (None, Some(url)) => {
+    val repo = new MavenRepository("JPL Resolve", url)
+    Seq(resolvers += repo)
+  }
+  case _ => sys.error("Set either -DJPL_LOCAL_RESOLVE_REPOSITORY=<dir> or"+
+    "-DJPL_REMOTE_RESOLVE_REPOSITORY=<url> where"+
+    "<dir> is a local Maven repository directory or"+
+    "<url> is a remote Maven repository URL")
+}
 
-// https://github.com/sbt/sbt-aspectj
-addSbtPlugin("com.typesafe.sbt" % "sbt-aspectj" % "0.10.4")
-
-// https://github.com/sbt/sbt-git
-addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.8.5")
-
-resolvers += "repo.spray.io" at "http://repo.spray.io/"
-
-libraryDependencies += "io.spray" %%  "spray-json" % "1.3.2"
+addSbtPlugin("gov.nasa.jpl.imce" % "imce-sbt-plugin" % "1.34")

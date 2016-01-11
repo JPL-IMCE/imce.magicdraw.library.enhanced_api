@@ -2,7 +2,7 @@
  *
  * License Terms
  *
- * Copyright (c) 2014-2015, California Institute of Technology ("Caltech").
+ * Copyright (c) 2014-2016, California Institute of Technology ("Caltech").
  * U.S. Government sponsorship acknowledged.
  *
  * All rights reserved.
@@ -45,6 +45,8 @@ import com.nomagic.magicdraw.actions.BrowserContextAMConfigurator
 import com.nomagic.magicdraw.actions.BrowserToolbarAMConfigurator
 import com.nomagic.magicdraw.ui.browser.Node
 import com.nomagic.magicdraw.ui.browser.Tree
+
+import scala.Unit
 
 /**
   * @author Nicolas.F.Rouquette@jpl.nasa.gov

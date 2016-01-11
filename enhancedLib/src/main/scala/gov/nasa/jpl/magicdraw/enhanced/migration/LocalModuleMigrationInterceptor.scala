@@ -2,7 +2,7 @@
  *
  * License Terms
  *
- * Copyright (c) 2014-2015, California Institute of Technology ("Caltech").
+ * Copyright (c) 2014-2016, California Institute of Technology ("Caltech").
  * U.S. Government sponsorship acknowledged.
  *
  * All rights reserved.
@@ -40,13 +40,16 @@ package gov.nasa.jpl.magicdraw.enhanced.migration
 
 import org.eclipse.emf.common.util.URI
 
+import scala.collection.immutable._
+import scala.Boolean
+
 object LocalModuleMigrationInterceptor {
 
   private val forceSkipLocalModules = scala.collection.mutable.HashSet[URI]()
 
   def getForceSkipLocalModules: Set[URI] = forceSkipLocalModules.toSet
 
-  def clearForceSkipLocalModules = forceSkipLocalModules.clear
+  def clearForceSkipLocalModules() = forceSkipLocalModules.clear
 
   def addForceSkipLocalModule(uri: URI) = forceSkipLocalModules.add(uri)
 
