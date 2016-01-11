@@ -331,6 +331,17 @@ lazy val core = Project("root", file("."))
             libs :+ "lib/jpl/" + enhancedLibJar.name
           }
 
+          val weaverJar: String = {
+            val weaverJars = jarArtifacts.flatMap {
+              case ("org.aspectj", "aspectjweaver", jar, _) =>
+                Some("lib/org.aspectj/" + jar.name)
+              case _ =>
+                None
+            }
+            require(1 == weaverJars.size)
+            weaverJars.head
+          }
+
           val bootJars = jarArtifacts.flatMap {
             case ("org.scala-lang", "scala-library", jar, _) =>
               Some("lib/org.scala-lang/" + jar.name)
@@ -383,7 +394,7 @@ lazy val core = Project("root", file("."))
 
             // Add AspectJ weaver agent & settings
             val patchedContents4 = patchedContents3.replaceFirst("JAVA_ARGS=(.*)",
-              "JAVA_ARGS=-javaagent:lib/org.aspectj/aspectjweaver.jar " +
+              s"JAVA_ARGS=-javaagent:$weaverJar " +
                 "-Daj.weaving.verbose\\\\=true " +
                 "-Dorg.aspectj.weaver.showWeaveInfo\\\\=true $1")
 
@@ -411,10 +422,11 @@ lazy val core = Project("root", file("."))
         ) map {
         (base, up, s, mdInstallDir, zip, pom, sbV) =>
 
-          s.log.info(s"\n***(3) Creating the zip: $zip")
+          val scalaBinary = "scala-" + sbV
+          s.log.info(s"\n***(3) Creating the zip: $zip (sbV=$scalaBinary)")
           val filter = new NameFilter() {
             def accept(name: String) = name match {
-              case "scala" => false
+              case scalaBinary => false
               case _ => true
             }
           }
