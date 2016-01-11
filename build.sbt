@@ -77,7 +77,6 @@ lazy val zipInstall = TaskKey[File]("zip-install", "Zip the MD Installation dire
 lazy val enhancedLib = project.in(new File("enhancedLib"))
   .enablePlugins(IMCEGitPlugin)
   .enablePlugins(IMCEReleasePlugin)
-  .settings(IMCEReleasePlugin.libraryReleaseProcessSettings: _*)
   .settings(
     IMCEKeys.licenseYearOrRange := "2014-2016",
     IMCEKeys.organizationInfo := IMCEPlugin.Organizations.cae,
@@ -150,6 +149,7 @@ lazy val enhancedLib = project.in(new File("enhancedLib"))
     sources in (Compile, doc) := Seq.empty,
     publishArtifact in (Compile, packageDoc) := false
   )
+  .settings(IMCEReleasePlugin.libraryReleaseProcessSettings)
   .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
   .settings(IMCEPlugin.aspectJSettings)
 
@@ -235,7 +235,6 @@ def UpdateProperties(mdInstall: File): RewriteRule = {
 lazy val core = Project("root", file("."))
   .enablePlugins(IMCEGitPlugin)
   .enablePlugins(IMCEReleasePlugin)
-  .settings(IMCEPlugin.packageLibraryDependenciesWithoutSourcesSettings: _*)
   .aggregate(enhancedLib)
   .dependsOn(enhancedLib)
   .settings(artifactZipFile := {
@@ -423,12 +422,35 @@ lazy val core = Project("root", file("."))
         ) map {
         (base, up, s, mdInstallDir, zip, pom, sbV) =>
 
+	  import java.nio.file.attribute.PosixFilePermission
+
           s.log.info(s"\n***(3) Creating the zip: $zip")
           val top: BFile = (base / "cae.md.package").toScala
           val scalaSubDir: Iterator[BFile] = top.glob("*/scala-" + sbV)
           scalaSubDir.foreach { dir: BFile =>
             s.log.info(s"* deleting $dir")
             dir.delete()
+          }
+
+          val macosExecutables: Iterator[BFile] = top.glob("*/**/*.app/Content/MacOS/*")
+          macosExecutables.foreach { f: BFile =>
+	    s.log.info(s"* +X $f")
+	    f.addPermission(PosixFilePermission.OWNER_EXECUTE) 
+          }
+          val windowsExecutables: Iterator[BFile] = top.glob("*/**/*.exe")
+          windowsExecutables.foreach { f: BFile =>
+	    s.log.info(s"* +X $f")
+	    f.addPermission(PosixFilePermission.OWNER_EXECUTE) 
+          }
+          val javaExecutables: Iterator[BFile] = top.glob("*/jre*/**/bin/*")
+          javaExecutables.foreach { f: BFile =>
+	    s.log.info(s"* +X $f")
+	    f.addPermission(PosixFilePermission.OWNER_EXECUTE) 
+          }
+          val unixExecutables: Iterator[BFile] = top.glob("*/bin/{magicdraw,submit_issue")
+          unixExecutables.foreach { f: BFile =>
+	    s.log.info(s"* +X $f")
+	    f.addPermission(PosixFilePermission.OWNER_EXECUTE) 
           }
 
           val zipDir = zip.getParentFile.toScala
@@ -440,3 +462,4 @@ lazy val core = Project("root", file("."))
           zip
       }
   )
+  .settings(IMCEPlugin.packageLibraryDependenciesWithoutSourcesSettings)
