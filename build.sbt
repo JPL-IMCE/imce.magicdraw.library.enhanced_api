@@ -462,4 +462,3 @@ lazy val core = Project("root", file("."))
           zip
       }
   )
-  .settings(IMCEPlugin.packageLibraryDependenciesWithoutSourcesSettings)
