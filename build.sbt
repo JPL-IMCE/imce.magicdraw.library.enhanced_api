@@ -140,12 +140,25 @@ lazy val enhancedLib = project.in(new File("enhancedLib"))
 
     unmanagedJars in Compile <++= extractArchives,
 
-    compile <<= (compile in Compile) dependsOn extractArchives
+    compile <<= (compile in Compile) dependsOn extractArchives,
+
+    // disable scaladoc to avoid the errors:
+    // [error] /opt/local/imce/users/nfr/github.imce/cae.magicdraw.package.aspectj_scala/enhancedLib/src/main/scala/gov/nasa/jpl/magicdraw/enhanced/ui/browser/EnhancedBrowserContextAMConfigurator.scala:58: Tag '@Pointcut' is not recognised
+    // [error]   /**
+    // [error]   ^
+    // [error] /opt/local/imce/users/nfr/github.imce/cae.magicdraw.package.aspectj_scala/enhancedLib/src/main/scala/gov/nasa/jpl/magicdraw/enhanced/ui/browser/EnhancedBrowserContextAMConfigurator.scala:90: Tag '@After' is not recognised
+    // [error]   /**
+    // [error]   ^
+    // [error] two errors found
+    sources in (Compile, doc) := Seq.empty,
+    publishArtifact in (Compile, packageDoc) := false
   )
   .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
   .settings(IMCEPlugin.aspectJSettings)
 
 def UpdateProperties(mdInstall: File): RewriteRule = {
+
+  import gov.nasa.jpl.imce.sbt._
 
   println(s"update properties for md.install=$mdInstall")
   val binDir = mdInstall / "bin"
