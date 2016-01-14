@@ -47,7 +47,7 @@ shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project
 lazy val mdInstallDirectory = SettingKey[File]("md-install-directory", "MagicDraw Installation Directory")
 
 mdInstallDirectory in ThisBuild :=
-  (baseDirectory in ThisBuild).value / "cae.md.package" / ("aspect_scala-" + Versions.version)
+  (baseDirectory in ThisBuild).value / "cae.md.package" / ("aspectj_scala-" + Versions.version)
 
 cleanFiles <+=
   (baseDirectory in ThisBuild) { base => base / "cae.md.package" }
@@ -146,8 +146,8 @@ lazy val enhancedLib = project.in(new File("enhancedLib"))
     // [error]   /**
     // [error]   ^
     // [error] two errors found
-    sources in (Compile, doc) := Seq.empty,
-    publishArtifact in (Compile, packageDoc) := false
+    sources in(Compile, doc) := Seq.empty,
+    publishArtifact in(Compile, packageDoc) := false
   )
   .settings(IMCEReleasePlugin.libraryReleaseProcessSettings)
   .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
@@ -213,7 +213,7 @@ def UpdateProperties(mdInstall: File): RewriteRule = {
       .sorted.map(MD5.md5File(samplesDir)))
 
   val all = MD5SubDirectory(
-    name= ".",
+    name = ".",
     sub = Seq(binSub, libSub, pluginsSub, modelsSub, profilesSub, scriptsSub, samplesSub))
 
   new RewriteRule {
@@ -255,8 +255,7 @@ lazy val core = Project("root", file("."))
     git.baseVersion := Versions.version,
 
     pomPostProcess <<= (pomPostProcess, mdInstallDirectory in ThisBuild) {
-      (previousPostProcess, mdInstallDir) =>
-      { (node: XNode) =>
+      (previousPostProcess, mdInstallDir) => { (node: XNode) =>
         println(s"original pom:")
         println(node)
         val processedNode: XNode = previousPostProcess(node)
@@ -269,6 +268,24 @@ lazy val core = Project("root", file("."))
         resultNode
       }
     },
+
+    // disable publishing the main jar produced by `package`
+    publishArtifact in(Compile, packageBin) := false,
+
+    // disable publishing the main API jar
+    publishArtifact in(Compile, packageDoc) := false,
+
+    // disable publishing the main sources jar
+    publishArtifact in(Compile, packageSrc) := false,
+
+    // disable publishing the jar produced by `test:package`
+    publishArtifact in(Test, packageBin) := false,
+
+    // disable publishing the test API jar
+    publishArtifact in(Test, packageDoc) := false,
+
+    // disable publishing the test sources jar
+    publishArtifact in(Test, packageSrc) := false,
 
     publish <<= publish dependsOn zipInstall,
     PgpKeys.publishSigned <<= PgpKeys.publishSigned dependsOn zipInstall,
@@ -402,7 +419,7 @@ lazy val core = Project("root", file("."))
             val patchedContents5 = patchedContents4.replaceFirst("(JAVA_ARGS=.*)",
               "$1 -DLOCALCONFIG\\\\=true " +
                 "-DWINCONFIG\\\\=true " +
-                "-Dlocal.config.dir.ext\\\\=-aspect_scala-" + Versions.version)
+                "-Dlocal.config.dir.ext\\\\=-aspectj_scala-" + Versions.version)
 
             val patchedContents6 = patchedContents5.replaceFirst("BOOT_CLASSPATH=(.*)",
               "BOOT_CLASSPATH=" + bootClasspathPrefix + "$1")
@@ -422,10 +439,13 @@ lazy val core = Project("root", file("."))
         ) map {
         (base, up, s, mdInstallDir, zip, pom, sbV) =>
 
-	  import java.nio.file.attribute.PosixFilePermission
+          import java.nio.file.attribute.PosixFilePermission
+          import com.typesafe.sbt.packager.universal._
 
-          s.log.info(s"\n***(3) Creating the zip: $zip")
-          val top: BFile = (base / "cae.md.package").toScala
+          s.log.info(s"\n*** Creating the zip: $zip")
+
+          val topDir = base / "cae.md.package"
+          val top: BFile = topDir.toScala
           val scalaSubDir: Iterator[BFile] = top.glob("*/scala-" + sbV)
           scalaSubDir.foreach { dir: BFile =>
             s.log.info(s"* deleting $dir")
@@ -434,30 +454,32 @@ lazy val core = Project("root", file("."))
 
           val macosExecutables: Iterator[BFile] = top.glob("*/**/*.app/Content/MacOS/*")
           macosExecutables.foreach { f: BFile =>
-	    s.log.info(s"* +X $f")
-	    f.addPermission(PosixFilePermission.OWNER_EXECUTE) 
+            s.log.info(s"* +X $f")
+            f.addPermission(PosixFilePermission.OWNER_EXECUTE)
           }
           val windowsExecutables: Iterator[BFile] = top.glob("*/**/*.exe")
           windowsExecutables.foreach { f: BFile =>
-	    s.log.info(s"* +X $f")
-	    f.addPermission(PosixFilePermission.OWNER_EXECUTE) 
+            s.log.info(s"* +X $f")
+            f.addPermission(PosixFilePermission.OWNER_EXECUTE)
           }
           val javaExecutables: Iterator[BFile] = top.glob("*/jre*/**/bin/*")
           javaExecutables.foreach { f: BFile =>
-	    s.log.info(s"* +X $f")
-	    f.addPermission(PosixFilePermission.OWNER_EXECUTE) 
+            s.log.info(s"* +X $f")
+            f.addPermission(PosixFilePermission.OWNER_EXECUTE)
           }
           val unixExecutables: Iterator[BFile] = top.glob("*/bin/{magicdraw,submit_issue}")
           unixExecutables.foreach { f: BFile =>
-	    s.log.info(s"* +X $f")
-	    f.addPermission(PosixFilePermission.OWNER_EXECUTE) 
+            s.log.info(s"* +X $f")
+            f.addPermission(PosixFilePermission.OWNER_EXECUTE)
           }
 
           val zipDir = zip.getParentFile.toScala
           Cmds.mkdirs(zipDir)
 
-          val zipped: BFile = top.zipTo(zip.toScala)
-          s.log.info(s"\n***(3) Created the zip: $zipped")
+          val fileMappings = (topDir.*** --- topDir) pair relativeTo(topDir)
+          ZipHelper.zipNIO(fileMappings, zip)
+
+          s.log.info(s"\n*** Created the zip: $zip")
 
           zip
       }
