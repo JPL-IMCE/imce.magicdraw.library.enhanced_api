@@ -222,7 +222,7 @@ def UpdateProperties(mdInstall: File): RewriteRule = {
     import MD5JsonProtocol._
 
     override def transform(n: XNode): Seq[XNode] = n match {
-      case <md5/> =>
+      case <md5></md5> =>
         <md5>
           {all.toJson}
         </md5>
@@ -253,6 +253,16 @@ lazy val core = Project("root", file("."))
     organizationHomepage := Some(url("http://cae.jpl.nasa.gov")),
 
     git.baseVersion := Versions.version,
+
+    projectID := {
+      import java.util.{ Date, TimeZone }
+      val formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm")
+      formatter.setTimeZone(TimeZone.getTimeZone("UTC"))
+      val timestamp = formatter.format(new Date)
+
+      val previous = projectID.value
+      previous.extra("buildDate.UTC" -> timestamp)
+    },
 
     pomPostProcess <<= (pomPostProcess, mdInstallDirectory in ThisBuild) {
       (previousPostProcess, mdInstallDir) => { (node: XNode) =>
