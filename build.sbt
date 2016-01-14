@@ -108,6 +108,10 @@ lazy val enhancedLib = project.in(new File("enhancedLib"))
         Artifact("all-aspectj_libraries", "zip", "zip")
     ),
 
+    resolvers +=  new MavenRepository(
+      "cae ext-release-local",
+      "https://cae-artrepo.jpl.nasa.gov/artifactory/ext-release-local"),
+
     extractArchives <<= (baseDirectory, update, streams,
       mdInstallDirectory in ThisBuild) map {
       (base, up, s, mdInstallDir) =>
