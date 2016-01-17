@@ -498,3 +498,4 @@ lazy val core = Project("root", file("."))
           zip
       }
   )
+  .settings(IMCEReleasePlugin.packageReleaseProcessSettings)
