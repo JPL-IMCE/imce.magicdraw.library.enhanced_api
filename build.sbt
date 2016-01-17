@@ -47,7 +47,7 @@ shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project
 lazy val mdInstallDirectory = SettingKey[File]("md-install-directory", "MagicDraw Installation Directory")
 
 mdInstallDirectory in ThisBuild :=
-  (baseDirectory in ThisBuild).value / "cae.md.package" / ("aspectj_scala-" + Versions.version)
+  (baseDirectory in ThisBuild).value / "cae.md.package" / ("cae.md18_0sp5.aspectj_scala-" + Versions.version)
 
 cleanFiles <+=
   (baseDirectory in ThisBuild) { base => base / "cae.md.package" }
