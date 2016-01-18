@@ -411,37 +411,32 @@ lazy val core = Project("root", file("."))
             val mdPropertyName = mdPropertyFile.name
             val unpatchedContents: String = IO.read(mdPropertyFile)
 
-            // Remove "-DLOCALCONFIG\=<value>" or "-DLOCALCONFIG=<value>" regardless of what <value> is.
-            val patchedContents1 = unpatchedContents.replaceAll("-DLOCALCONFIG\\\\?=[^ ]* ",
-              "")
-
-            // Remove "-DWINCONFIG\=<value>" or "-DWINCONFIG=<value>" regardless of what <value> is.
-            val patchedContents2 = patchedContents1.replaceAll("-DWINCONFIG\\\\?=[^ ]* ",
-              "")
-
             // Remove "-Dlocal.config.dir.ext\=<value>" or "-Dlocal.config.dir.ext=<value>" regardless of what <value> is.
-            val patchedContents3 = patchedContents2.replaceAll("-Dlocal.config.dir.ext\\\\?=[^ ]* ",
-              "")
+            val patchedContents1 = unpatchedContents.replaceAll(
+              "-Dlocal.config.dir.ext\\\\?=[a-zA-Z0-9_\\\\-]*",
+              "-Dlocal.config.dir.ext\\\\=-aspectj_scala-" + Versions.version)
 
             // Add AspectJ weaver agent & settings
-            val patchedContents4 = patchedContents3.replaceFirst("JAVA_ARGS=(.*)",
+            val patchedContents2 = patchedContents1.replaceFirst(
+              "JAVA_ARGS=",
               s"JAVA_ARGS=-javaagent:$weaverJar " +
                 "-Daj.weaving.verbose\\\\=true " +
-                "-Dorg.aspectj.weaver.showWeaveInfo\\\\=true $1")
+                "-Dorg.aspectj.weaver.showWeaveInfo\\\\=true ")
 
             // MD config settings
-            val patchedContents5 = patchedContents4.replaceFirst("(JAVA_ARGS=.*)",
-              "$1 -DLOCALCONFIG\\\\=true " +
-                "-DWINCONFIG\\\\=true " +
-                "-Dlocal.config.dir.ext\\\\=-aspectj_scala-" + Versions.version)
+            val patchedContents3 = patchedContents2.replaceFirst(
+              "JAVA_HOME=\\S*",
+              "JAVA_HOME=")
 
-            val patchedContents6 = patchedContents5.replaceFirst("BOOT_CLASSPATH=(.*)",
-              "BOOT_CLASSPATH=" + bootClasspathPrefix + "$1")
+            val patchedContents4 = patchedContents3.replaceFirst(
+              "BOOT_CLASSPATH=",
+              "BOOT_CLASSPATH=" + bootClasspathPrefix)
 
-            val patchedContents7 = patchedContents6.replaceFirst("([^_])CLASSPATH=(.*)",
+            val patchedContents5 = patchedContents4.replaceFirst(
+              "([^_])CLASSPATH=(.*)",
               jars.mkString("$1CLASSPATH=", "\\\\:", "\\\\:$2"))
 
-            IO.write(file = mdPropertyFile, content = patchedContents7, append = false)
+            IO.write(file = mdPropertyFile, content = patchedContents5, append = false)
           }
       },
 
