@@ -413,7 +413,7 @@ lazy val core = Project("root", file("."))
 
             // Remove "-Dlocal.config.dir.ext\=<value>" or "-Dlocal.config.dir.ext=<value>" regardless of what <value> is.
             val patchedContents1 = unpatchedContents.replaceAll(
-              "-Dlocal.config.dir.ext\\\\?=[a-zA-Z0-9_\\\\-]*",
+              "-Dlocal.config.dir.ext\\\\?=[a-zA-Z0-9_.\\\\-]*",
               "-Dlocal.config.dir.ext\\\\=-aspectj_scala-" + Versions.version)
 
             // Add AspectJ weaver agent & settings
