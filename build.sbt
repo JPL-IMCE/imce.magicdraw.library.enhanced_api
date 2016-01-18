@@ -466,16 +466,19 @@ lazy val core = Project("root", file("."))
             s.log.info(s"* +X $f")
             f.addPermission(PosixFilePermission.OWNER_EXECUTE)
           }
+
           val windowsExecutables: Iterator[BFile] = top.glob("*/**/*.exe")
           windowsExecutables.foreach { f: BFile =>
             s.log.info(s"* +X $f")
             f.addPermission(PosixFilePermission.OWNER_EXECUTE)
           }
+
           val javaExecutables: Iterator[BFile] = top.glob("*/jre*/**/bin/*")
           javaExecutables.foreach { f: BFile =>
             s.log.info(s"* +X $f")
             f.addPermission(PosixFilePermission.OWNER_EXECUTE)
           }
+
           val unixExecutables: Iterator[BFile] = top.glob("*/bin/{magicdraw,submit_issue}")
           unixExecutables.foreach { f: BFile =>
             s.log.info(s"* +X $f")
@@ -486,7 +489,7 @@ lazy val core = Project("root", file("."))
           Cmds.mkdirs(zipDir)
 
           val fileMappings = (topDir.*** --- topDir) pair relativeTo(topDir)
-          ZipHelper.zipNIO(fileMappings, zip)
+          ZipHelper.zipNative(fileMappings, zip)
 
           s.log.info(s"\n*** Created the zip: $zip")
 
