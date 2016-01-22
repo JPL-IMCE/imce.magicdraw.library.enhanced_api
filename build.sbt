@@ -423,20 +423,15 @@ lazy val core = Project("root", file("."))
                 "-Daj.weaving.verbose\\\\=true " +
                 "-Dorg.aspectj.weaver.showWeaveInfo\\\\=true ")
 
-            // MD config settings
             val patchedContents3 = patchedContents2.replaceFirst(
-              "JAVA_HOME=\\S*",
-              "JAVA_HOME=")
-
-            val patchedContents4 = patchedContents3.replaceFirst(
               "BOOT_CLASSPATH=",
               "BOOT_CLASSPATH=" + bootClasspathPrefix)
 
-            val patchedContents5 = patchedContents4.replaceFirst(
+            val patchedContents4 = patchedContents3.replaceFirst(
               "([^_])CLASSPATH=(.*)",
               jars.mkString("$1CLASSPATH=", "\\\\:", "\\\\:$2"))
 
-            IO.write(file = mdPropertyFile, content = patchedContents5, append = false)
+            IO.write(file = mdPropertyFile, content = patchedContents4, append = false)
           }
       },
 
