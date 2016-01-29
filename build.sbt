@@ -45,9 +45,13 @@ val cae_artifactory_plugin_snapshots =
 shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
 
 lazy val mdInstallDirectory = SettingKey[File]("md-install-directory", "MagicDraw Installation Directory")
+lazy val mdAlternateDirectory = SettingKey[File]("md-alternate-directory", "Alternate MagicDraw Installation Directory")
 
 mdInstallDirectory in ThisBuild :=
   (baseDirectory in ThisBuild).value / "cae.md.package" / ("cae.md18_0sp5.aspectj_scala-" + Versions.version)
+
+mdAlternateDirectory in ThisBuild :=
+  (baseDirectory in ThisBuild).value / "cae.md.package" / "no-install"
 
 cleanFiles <+=
   (baseDirectory in ThisBuild) { base => base / "cae.md.package" }
@@ -98,6 +102,15 @@ lazy val enhancedLib = project.in(new File("enhancedLib"))
     aspectjVersion in Aspectj := Versions.org_aspectj_version,
 
     libraryDependencies ++= Seq(
+
+      // This dependency will be used to replace all executables & mac-specific applications from the CAE MDK.
+
+      "com.nomagic.magicdraw.application" % "magicdraw" % Versions.magicdraw_no_install % "compile" artifacts
+       Artifact("magicdraw", "zip", "zip"),
+
+      // All executables & mac-specific applications in CAE MDK will be replaced
+      // with those from magicdraw's no-install bundle.
+
       "gov.nasa.jpl.cae.magicdraw.packages" % "cae_md18_0_sp5_mdk" % Versions.mdk_package % "compile" artifacts
         Artifact("cae_md18_0_sp5_mdk", "zip", "zip"),
 
@@ -113,17 +126,62 @@ lazy val enhancedLib = project.in(new File("enhancedLib"))
       "https://cae-artrepo.jpl.nasa.gov/artifactory/ext-release-local"),
 
     extractArchives <<= (baseDirectory, update, streams,
-      mdInstallDirectory in ThisBuild) map {
-      (base, up, s, mdInstallDir) =>
+      mdInstallDirectory in ThisBuild,
+      mdAlternateDirectory in ThisBuild) map {
+      (base, up, s, mdInstallDir, mdAlternateDir) =>
 
         if (!mdInstallDir.exists) {
-          val zips: Seq[File] = up.matching(artifactFilter(`type` = "zip", extension = "zip"))
-          zips.foreach { zip =>
-            val files = IO.unzip(zip, mdInstallDir)
-            s.log.info(
-              s"=> created md.install.dir=$mdInstallDir with ${files.size} " +
-                s"files extracted from zip: ${zip.getName}")
+
+          val mdkZip: File =
+            singleMatch(up, artifactFilter(name = "cae_md18_0_sp5_mdk", `type` = "zip", extension = "zip"))
+          s.log.info(s"=> Extracting CAE MDK: $mdkZip")
+          nativeUnzip(mdkZip, mdInstallDir)
+
+          val noInstallZip: File =
+            singleMatch(up, artifactFilter(name = "magicdraw", `type` = "zip", extension = "zip"))
+          s.log.info(s"=> Extracting MD's no-install: $noInstallZip")
+          nativeUnzip(noInstallZip, mdAlternateDir)
+
+          // Find all files in no-install that have the executable flag set
+          // and copy their permission flags on their corresponding file
+          // in the installation folder.
+
+          val isExecutable = new FileFilter {
+            def accept(f: File): Boolean =
+              !f.isDirectory && f.canExecute
           }
+
+          val execFiles = (mdAlternateDir ** isExecutable) pair relativeTo(mdAlternateDir)
+          s.log.info(s"=> ${execFiles.size} executable files")
+          execFiles foreach { case (execFile, execPath) =>
+            val installedFile = mdInstallDir / execPath
+            if (installedFile.exists) {
+              s.log.info(s" - $execPath")
+              installedFile.toScala.setPermissions(execFile.toScala.permissions)
+            }
+          }
+
+          // Find all files in no-install that match the pattern *.exe
+          // and copy their permission flags on their corresponding file
+          // in the installation folder.
+
+          val isWindowsEXE = new FileFilter {
+            def accept(f: File): Boolean =
+              !f.isDirectory && (f.name endsWith ".exe")
+          }
+          val windowsEXEFiles = (mdAlternateDir ** isWindowsEXE) pair relativeTo(mdAlternateDir)
+          s.log.info(s"=> ${windowsEXEFiles.size} windows *.exe files")
+          windowsEXEFiles foreach { case (exeFile, exePath) =>
+            val installedFile = mdInstallDir / exePath
+            if (installedFile.exists) {
+              import java.nio.file.attribute.PosixFilePermission
+              s.log.info(s" - $exePath")
+              installedFile.toScala.addPermission(PosixFilePermission.OWNER_EXECUTE)
+              installedFile.toScala.addPermission(PosixFilePermission.GROUP_EXECUTE)
+              installedFile.toScala.addPermission(PosixFilePermission.OTHERS_EXECUTE)
+            }
+          }
+
         } else
           s.log.info(
             s"=> use existing md.install.dir=$mdInstallDir")
@@ -132,8 +190,6 @@ lazy val enhancedLib = project.in(new File("enhancedLib"))
         val mdJars = for {
           jar <- Files.walk(libPath).iterator().filter(_.toString.endsWith(".jar")).map(_.toFile)
         } yield Attributed.blank(jar)
-
-
 
         mdJars.toSeq
     },
@@ -156,6 +212,37 @@ lazy val enhancedLib = project.in(new File("enhancedLib"))
   .settings(IMCEReleasePlugin.libraryReleaseProcessSettings)
   .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
   .settings(IMCEPlugin.aspectJSettings)
+
+def nativeCopyFile(from: File, to: File): Unit = {
+  val target = to.getParentFile
+  if (target.exists() && target.canWrite) {
+    Process(Seq("cp", "-p", from.getAbsolutePath, to.getAbsolutePath), target).! match {
+      case 0 => ()
+      case n => sys.error("Failed to run native cp application!")
+    }
+  }
+}
+
+def nativeCopyDirectory(from: File, to: File): Unit = {
+  Process(Seq("cp", "-rp", from.getAbsolutePath, to.getAbsolutePath), to.getParentFile).! match {
+    case 0 => ()
+    case n => sys.error("Failed to run native cp application!")
+  }
+}
+
+def nativeUnzip(f: File, dir: File): Unit = {
+  IO.createDirectory(dir)
+  Process(Seq("unzip", "-q", f.getAbsolutePath, "-d", dir.getAbsolutePath), dir).! match {
+    case 0 => ()
+    case n => sys.error("Failed to run native unzip application!")
+  }
+}
+
+def singleMatch(up: UpdateReport, f: DependencyFilter): File = {
+  val files: Seq[File] = up.matching(f)
+  require(1 == files.size)
+  files.head
+}
 
 def UpdateProperties(mdInstall: File): RewriteRule = {
 
@@ -443,50 +530,8 @@ lazy val core = Project("root", file("."))
         ) map {
         (base, up, s, mdInstallDir, zip, pom, sbV) =>
 
-          import java.nio.file.attribute.PosixFilePermission
-          import com.typesafe.sbt.packager.universal._
-
-          s.log.info(s"\n*** Creating the zip: $zip")
-
-          val topDir = base / "cae.md.package"
-          val top: BFile = topDir.toScala
-          val scalaSubDir: Iterator[BFile] = top.glob("*/scala-" + sbV)
-          scalaSubDir.foreach { dir: BFile =>
-            s.log.info(s"* deleting $dir")
-            dir.delete()
-          }
-
-          val macosExecutables: Iterator[BFile] = top.glob("*/**/*.app/Content/MacOS/*")
-          macosExecutables.foreach { f: BFile =>
-            s.log.info(s"* +X $f")
-            f.addPermission(PosixFilePermission.OWNER_EXECUTE)
-          }
-
-          val windowsExecutables: Iterator[BFile] = top.glob("*/**/*.exe")
-          windowsExecutables.foreach { f: BFile =>
-            s.log.info(s"* +X $f")
-            f.addPermission(PosixFilePermission.OWNER_EXECUTE)
-          }
-
-          val javaExecutables: Iterator[BFile] = top.glob("*/jre*/**/bin/*")
-          javaExecutables.foreach { f: BFile =>
-            s.log.info(s"* +X $f")
-            f.addPermission(PosixFilePermission.OWNER_EXECUTE)
-          }
-
-          val unixExecutables: Iterator[BFile] = top.glob("*/bin/{magicdraw,submit_issue}")
-          unixExecutables.foreach { f: BFile =>
-            s.log.info(s"* +X $f")
-            f.addPermission(PosixFilePermission.OWNER_EXECUTE)
-          }
-
-          val zipDir = zip.getParentFile.toScala
-          Cmds.mkdirs(zipDir)
-
-          val fileMappings = (topDir.*** --- topDir) pair relativeTo(topDir)
-          ZipHelper.zipNative(fileMappings, zip)
-
-          s.log.info(s"\n*** Created the zip: $zip")
+          s.log.info(s"\n# Creating the zip: $zip")
+          IO.zip(allSubpaths(mdInstallDir), zip)
 
           zip
       }
