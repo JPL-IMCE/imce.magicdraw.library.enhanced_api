@@ -1,6 +1,16 @@
-# CAE MagicDraw Package with AspectJ, Scala libraries and AspectJ-based MD API enhancements
+# IMCE MagicDraw Library for AspectJ-based MD API enhancements
 
-This package adds support for using AspectJ with the MD API using the so-called
+This library provides the following enhancements to MagicDraw's APIs:
+
+- [Enhanced MD Browser context action](src/main/scala/gov/nasa/jpl/magicdraw/enhanced/ui/browser/EnhancedBrowserContextAMConfigurator.scala)
+
+- [Enhanced MD Draw Path action](src/main/scala/gov/nasa/jpl/magicdraw/enhanced/actions/paths/EnhancedDrawPathAction.scala)
+
+- [Load Module Migration Interceptor](src/main/scala/gov/nasa/jpl/magicdraw/enhanced/migration/LocalModuleMigrationInterceptor.scala)
+
+## About using AspectJ in MagicDraw
+
+To enable these enhancements at runtime in MD, this library uses the so-called
 [load-time weaving](https://eclipse.org/aspectj/doc/released/devguide/ltw.html)
 strategy. AspectJ is an aspect-oriented extension to Java. Because AspectJ operates
  at the level of bytecode, it is also applicable to other languages like Scala that compile to the JVM.
