@@ -1,16 +1,22 @@
+import better.files.{File => BFile, _}
 import java.io.File
 import java.nio.file.Files
 
 import sbt._
 import Keys._
 
+import com.typesafe.sbt.pgp.PgpKeys
 import com.typesafe.sbt.SbtAspectj._
 import com.typesafe.sbt.SbtAspectj.AspectjKeys._
 
-import org.apache.ivy.core.module.descriptor.{DependencyDescriptor, ModuleDescriptor}
-import org.apache.ivy.util.extendable.ExtendableItem
+import scala.xml.{Node => XNode}
+import scala.xml.transform._
 
 import scala.collection.JavaConversions._
+
+import gov.nasa.jpl.imce.sbt._
+
+useGpg := true
 
 val cae_artifactory_ext_releases =
   Resolver.url(
@@ -24,13 +30,13 @@ val cae_artifactory_ext_snapshots =
     url("https://cae-artrepo.jpl.nasa.gov/artifactory/ext-snapshot-local")
   )(Resolver.mavenStylePatterns)
 
-val cae_artifactory_plugin_releases = 
+val cae_artifactory_plugin_releases =
   Resolver.url(
     "Artifactory Realm",
     url("https://cae-artrepo.jpl.nasa.gov/artifactory/plugins-release-local")
   )(Resolver.mavenStylePatterns)
-  
-val cae_artifactory_plugin_snapshots = 
+
+val cae_artifactory_plugin_snapshots =
   Resolver.url(
     "Artifactory Realm",
     url("https://cae-artrepo.jpl.nasa.gov/artifactory/plugins-snapshot-local")
@@ -39,13 +45,16 @@ val cae_artifactory_plugin_snapshots =
 shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
 
 lazy val mdInstallDirectory = SettingKey[File]("md-install-directory", "MagicDraw Installation Directory")
+lazy val mdAlternateDirectory = SettingKey[File]("md-alternate-directory", "Alternate MagicDraw Installation Directory")
 
-mdInstallDirectory in ThisBuild := (baseDirectory in ThisBuild).value / "cae.md.package"
+mdInstallDirectory in ThisBuild :=
+  (baseDirectory in ThisBuild).value / "cae.md.package" / ("cae.md18_0sp5.aspectj_scala-" + Versions.version)
+
+mdAlternateDirectory in ThisBuild :=
+  (baseDirectory in ThisBuild).value / "cae.md.package" / "no-install"
 
 cleanFiles <+=
   (baseDirectory in ThisBuild) { base => base / "cae.md.package" }
-
-git.useGitDescribe in ThisBuild := true
 
 ivyLoggingLevel := UpdateLogging.Full
 
@@ -53,55 +62,11 @@ logLevel in Compile := Level.Debug
 
 persistLogLevel := Level.Debug
 
-val noSourcesSettings: Seq[Setting[_]] = Seq(
-
-  // disable using the project's base directory as a source directory
-  sourcesInBase := false,
-
-  // Map artifact ModuleID to a Maven-style path for publishing/lookup on the repo
-  publishMavenStyle := true,
-
-  // where to publish artifacts
-  publishTo := Some(cae_artifactory_ext_releases),
-
-  // where to look for resolving library dependencies
-  fullResolvers ++= Seq(new MavenRepository("cae ext-release-local", "https://cae-artrepo.jpl.nasa.gov/artifactory/ext-release-local"),
-                        new MavenRepository("cae plugins-release-local", "https://cae-artrepo.jpl.nasa.gov/artifactory/plugins-release-local")
-                    ),
-
-  scalaVersion := "2.11.7",
-
-  // disable automatic dependency on the Scala library
-  autoScalaLibrary := false,
-
-  // disable automatic dependency on the Scala tools used to run SBT itself
-  //managedScalaInstance := false,
-
-  // disable using the Scala version in output paths and artifacts
-  crossPaths := false,
-
-  // disable publishing the main jar produced by `package`
-  publishArtifact in (Compile, packageBin) := false,
-
-  // disable publishing the main API jar
-  publishArtifact in (Compile, packageDoc) := false,
-
-  // disable publishing the main sources jar
-  publishArtifact in (Compile, packageSrc) := false,
-
-  pomAllRepositories := true,
-
-  makePomConfiguration :=
-    makePomConfiguration.value.copy(includeTypes = Set(Artifact.DefaultType, Artifact.PomType, "zip"))
-
+// where to look for resolving library dependencies
+fullResolvers ++= Seq(
+  new MavenRepository("cae ext-release-local", "https://cae-artrepo.jpl.nasa.gov/artifactory/ext-release-local"),
+  new MavenRepository("cae plugins-release-local", "https://cae-artrepo.jpl.nasa.gov/artifactory/plugins-release-local")
 )
-
-def moduleSettings(moduleID: ModuleID): Seq[Setting[_]] =
-  Seq(
-    name := moduleID.name,
-    organization := moduleID.organization,
-    version := moduleID.revision
-  )
 
 lazy val artifactZipFile = taskKey[File]("Location of the zip artifact file")
 
@@ -109,277 +74,466 @@ lazy val extractArchives = TaskKey[Seq[Attributed[File]]]("extract-archives", "E
 
 lazy val updateInstall = TaskKey[Unit]("update-install", "Update the MD Installation directory")
 
+lazy val md5Install = TaskKey[Unit]("md5-install", "Produce an MD5 report of the MD Installation directory")
 
-// step1
-val mdk_package_ID = "gov.nasa.jpl.cae.magicdraw.packages" % Versions.mdk_package_N % Versions.mdk_package_V
-val mdk_package_A = Artifact(mdk_package_ID.name, "zip", "zip")
+lazy val zipInstall = TaskKey[File]("zip-install", "Zip the MD Installation directory")
 
-lazy val enhancedLib = Project("enhancedLib", file("enhancedLib"))
-    .enablePlugins(GitVersioning)
-    .enablePlugins(GitBranchPrompt)
-    .settings(aspectjSettings : _*)
-    .settings(
-      homepage := Some(url("https://github.jpl.nasa.gov/mbee-dev/" + Versions.aspectj_scala_package_P)),
-      organizationHomepage := Some(url("http://cae.jpl.nasa.gov")),
-
-      // Map artifact ModuleID to a Maven-style path for publishing/lookup on the repo
-      publishMavenStyle := true,
-
-      // where to publish artifacts
-      publishTo := Some(cae_artifactory_ext_releases),
-
-      // where to look for resolving library dependencies
-      fullResolvers ++= Seq(new MavenRepository("cae ext-release-local", "https://cae-artrepo.jpl.nasa.gov/artifactory/ext-release-local"),
-        new MavenRepository("cae plugins-release-local", "https://cae-artrepo.jpl.nasa.gov/artifactory/plugins-release-local")
-      ),
-
-      // include all repositories in the POM
-      pomAllRepositories := true,
-
-      // include *.zip artifacts in the POM dependency section
-      makePomConfiguration :=
-        makePomConfiguration.value.copy(includeTypes = Set(Artifact.DefaultType, Artifact.PomType, "zip")),
-
-      git.baseVersion := Versions.cae_md_package_N_prefix,
-      git.useGitDescribe := true,
-
-      organization := "gov.nasa.jpl.cae.magicdraw.libraries",
-
-      scalaVersion := "2.11.7",
-
-      // disable automatic dependency on the Scala library
-      autoScalaLibrary := false,
-
-      scalacOptions += "-g:vars",
-      javacOptions += "-g:vars",
-
-      extraAspectjOptions in Aspectj := Seq("-g"),
-
-      // only compile the aspects (no weaving)
-      compileOnly in Aspectj := true,
-
-      // add the compiled aspects as products
-      products in Compile <++= products in Aspectj,
-
-      resourceDirectory in Compile := baseDirectory.value / "resources",
-
-      aspectjSource in Aspectj := baseDirectory.value / "src" / "main" / "aspectj",
-      javaSource in Compile := baseDirectory.value / "src" / "main" / "aspectj",
-
-      compileOrder := CompileOrder.ScalaThenJava,
-
-      aspectjVersion in Aspectj := Versions.org_aspectj_version,
-
-      libraryDependencies ++= Seq(
-        mdk_package_ID % "compile" artifacts mdk_package_A,
-
-        // Scala
-        "org.scala-lang" % "scala-library" %
-          Versions.scala_version % "compile" withSources() withJavadoc(),
-
-        "org.scala-lang" % "scala-compiler" %
-          Versions.scala_version % "compile" withSources() withJavadoc(),
-
-        "org.scala-lang" % "scala-reflect" %
-          Versions.scala_version % "compile" withSources() withJavadoc(),
-
-        "org.scala-lang" % "scalap" %
-          Versions.scala_version % "compile" withSources() withJavadoc(),
-
-        "org.scala-lang.modules" % s"scala-xml_${Versions.scala_binary}" %
-          Versions.scala_xml_version % "compile" withSources() withJavadoc(),
-
-        "org.scala-lang.modules" % s"scala-parser-combinators_${Versions.scala_binary}" %
-          Versions.scala_parser_combinators_version % "compile" withSources() withJavadoc(),
-
-        "org.scala-lang.modules" % s"scala-swing_${Versions.scala_binary}" %
-          Versions.scala_swing_version % "compile" withSources() withJavadoc(),
-
-        "org.scala-lang.plugins" % s"scala-continuations-library_${Versions.scala_binary}" %
-          Versions.scala_continuations_version % "compile" withSources() withJavadoc(),
-
-        // AspectJ
-        "org.aspectj" % "aspectjrt" %
-          Versions.org_aspectj_version % "compile" withSources() withJavadoc(),
-
-        "org.aspectj" % "aspectjtools" %
-          Versions.org_aspectj_version % "compile" withSources() withJavadoc(),
-
-        "org.aspectj" % "aspectjweaver" %
-          Versions.org_aspectj_version % "compile" withSources() withJavadoc()
-      ),
-
-      extractArchives <<= (baseDirectory, update, streams, mdInstallDirectory in ThisBuild) map {
-        (base, up, s, mdInstallDir) =>
-
-          if (!mdInstallDir.exists) {
-            val zips: Seq[File] = up.matching(artifactFilter(`type` = "zip", extension = "zip"))
-            zips.foreach { zip =>
-              val files = IO.unzip(zip, mdInstallDir)
-              s.log.info(
-                s"=> created md.install.dir=$mdInstallDir with ${files.size} "+
-                s"files extracted from zip: ${zip.getName}")
-            }
-          } else
-            s.log.info(
-              s"=> use existing md.install.dir=$mdInstallDir")
-
-          val libPath = (mdInstallDir / "lib").toPath
-          val mdJars = for {
-            jar <- Files.walk(libPath).iterator().filter(_.toString.endsWith(".jar")).map(_.toFile)
-          } yield Attributed.blank(jar)
-
-          mdJars.toSeq
-      },
-
-      unmanagedJars in Compile <++= extractArchives,
-
-      compile <<= (compile in Compile) dependsOn extractArchives
-    )
-    .settings(aspectjDependencySettings : _*)
-
-lazy val core = Project("root", file("."))
-  .enablePlugins(GitVersioning)
-  .enablePlugins(GitBranchPrompt)
-  .settings(noSourcesSettings)
-  .aggregate(enhancedLib)
-  .dependsOn(enhancedLib)
-  .settings(artifactZipFile := { baseDirectory.value / "target" / "package" / Versions.aspectj_scala_package_Z })
-  .settings(addArtifact( Artifact(Versions.aspectj_scala_package_N, "zip", "zip"), artifactZipFile ).settings: _*)
+lazy val enhancedLib = project.in(new File("enhancedLib"))
+  .enablePlugins(IMCEGitPlugin)
+  .enablePlugins(IMCEReleasePlugin)
   .settings(
-    organization := "gov.nasa.jpl.cae.magicdraw.packages",
-    name := Versions.aspectj_scala_package_N,
-    homepage := Some(url("https://github.jpl.nasa.gov/mbee-dev/" + Versions.aspectj_scala_package_P)),
+    IMCEKeys.licenseYearOrRange := "2014-2016",
+    IMCEKeys.organizationInfo := IMCEPlugin.Organizations.cae,
+    IMCEKeys.targetJDK := IMCEKeys.jdk18.value,
+    git.baseVersion := Versions.version,
+
+    homepage := Some(url("https://github.jpl.nasa.gov/mbee-dev/cae.magicdraw.packages.aspectj_scala")),
     organizationHomepage := Some(url("http://cae.jpl.nasa.gov")),
 
-    git.baseVersion := Versions.cae_md_package_N_prefix,
-    git.useGitDescribe := true,
+    organization := "gov.nasa.jpl.cae.magicdraw.libraries",
 
-    publish <<= publish dependsOn updateInstall,
-    publishLocal <<= publishLocal dependsOn updateInstall,
+    resourceDirectory in Compile := baseDirectory.value / "resources",
 
-    updateInstall <<= updateInstall dependsOn (packageBin in Compile in enhancedLib),
-    updateInstall <<= updateInstall dependsOn (packageSrc in Compile in enhancedLib),
-    updateInstall <<= updateInstall dependsOn (packageDoc in Compile in enhancedLib),
+    aspectjSource in Aspectj := baseDirectory.value / "src" / "main" / "aspectj",
+    javaSource in Compile := baseDirectory.value / "src" / "main" / "aspectj",
+
+    compileOrder := CompileOrder.ScalaThenJava,
+
+    aspectjVersion in Aspectj := Versions.org_aspectj_version,
+
+    libraryDependencies ++= Seq(
+
+      // This dependency will be used to replace all executables & mac-specific applications from the CAE MDK.
+
+      "com.nomagic.magicdraw.application" % "magicdraw" % Versions.magicdraw_no_install % "compile" artifacts
+       Artifact("magicdraw", "zip", "zip"),
+
+      // All executables & mac-specific applications in CAE MDK will be replaced
+      // with those from magicdraw's no-install bundle.
+
+      "gov.nasa.jpl.cae.magicdraw.packages" % "cae_md18_0_sp5_mdk" % Versions.mdk_package % "compile" artifacts
+        Artifact("cae_md18_0_sp5_mdk", "zip", "zip"),
+
+      "gov.nasa.jpl.imce.thirdParty" %% "all-scala-libraries" % Versions.jpl_mbee_common_scala_libraries artifacts
+        Artifact("all-scala-libraries", "zip", "zip"),
+
+      "gov.nasa.jpl.imce.thirdParty" %% "all-aspectj_libraries" % Versions.jpl_mbee_common_scala_libraries artifacts
+        Artifact("all-aspectj_libraries", "zip", "zip")
+    ),
+
+    resolvers +=  new MavenRepository(
+      "cae ext-release-local",
+      "https://cae-artrepo.jpl.nasa.gov/artifactory/ext-release-local"),
+
+    extractArchives <<= (baseDirectory, update, streams,
+      mdInstallDirectory in ThisBuild,
+      mdAlternateDirectory in ThisBuild) map {
+      (base, up, s, mdInstallDir, mdAlternateDir) =>
+
+        if (!mdInstallDir.exists) {
+
+          val mdkZip: File =
+            singleMatch(up, artifactFilter(name = "cae_md18_0_sp5_mdk", `type` = "zip", extension = "zip"))
+          s.log.info(s"=> Extracting CAE MDK: $mdkZip")
+          nativeUnzip(mdkZip, mdInstallDir)
+
+          val noInstallZip: File =
+            singleMatch(up, artifactFilter(name = "magicdraw", `type` = "zip", extension = "zip"))
+          s.log.info(s"=> Extracting MD's no-install: $noInstallZip")
+          nativeUnzip(noInstallZip, mdAlternateDir)
+
+          // Find all files in no-install that have the executable flag set
+          // and copy their permission flags on their corresponding file
+          // in the installation folder.
+
+          val isExecutable = new FileFilter {
+            def accept(f: File): Boolean =
+              !f.isDirectory && f.canExecute
+          }
+
+          val execFiles = (mdAlternateDir ** isExecutable) pair relativeTo(mdAlternateDir)
+          s.log.info(s"=> ${execFiles.size} executable files")
+          execFiles foreach { case (execFile, execPath) =>
+            val installedFile = mdInstallDir / execPath
+            if (installedFile.exists) {
+              s.log.info(s" - $execPath")
+              installedFile.toScala.setPermissions(execFile.toScala.permissions)
+            }
+          }
+
+          // Find all files in no-install that match the pattern *.exe
+          // and copy their permission flags on their corresponding file
+          // in the installation folder.
+
+          val isWindowsEXE = new FileFilter {
+            def accept(f: File): Boolean =
+              !f.isDirectory && (f.name endsWith ".exe")
+          }
+          val windowsEXEFiles = (mdAlternateDir ** isWindowsEXE) pair relativeTo(mdAlternateDir)
+          s.log.info(s"=> ${windowsEXEFiles.size} windows *.exe files")
+          windowsEXEFiles foreach { case (exeFile, exePath) =>
+            val installedFile = mdInstallDir / exePath
+            if (installedFile.exists) {
+              import java.nio.file.attribute.PosixFilePermission
+              s.log.info(s" - $exePath")
+              installedFile.toScala.addPermission(PosixFilePermission.OWNER_EXECUTE)
+              installedFile.toScala.addPermission(PosixFilePermission.GROUP_EXECUTE)
+              installedFile.toScala.addPermission(PosixFilePermission.OTHERS_EXECUTE)
+            }
+          }
+
+        } else
+          s.log.info(
+            s"=> use existing md.install.dir=$mdInstallDir")
+
+        val libPath = (mdInstallDir / "lib").toPath
+        val mdJars = for {
+          jar <- Files.walk(libPath).iterator().filter(_.toString.endsWith(".jar")).map(_.toFile)
+        } yield Attributed.blank(jar)
+
+        mdJars.toSeq
+    },
+
+    unmanagedJars in Compile <++= extractArchives,
+
+    compile <<= (compile in Compile) dependsOn extractArchives,
+
+    // disable scaladoc to avoid the errors:
+    // [error] /opt/local/imce/users/nfr/github.imce/cae.magicdraw.package.aspectj_scala/enhancedLib/src/main/scala/gov/nasa/jpl/magicdraw/enhanced/ui/browser/EnhancedBrowserContextAMConfigurator.scala:58: Tag '@Pointcut' is not recognised
+    // [error]   /**
+    // [error]   ^
+    // [error] /opt/local/imce/users/nfr/github.imce/cae.magicdraw.package.aspectj_scala/enhancedLib/src/main/scala/gov/nasa/jpl/magicdraw/enhanced/ui/browser/EnhancedBrowserContextAMConfigurator.scala:90: Tag '@After' is not recognised
+    // [error]   /**
+    // [error]   ^
+    // [error] two errors found
+    sources in(Compile, doc) := Seq.empty,
+    publishArtifact in(Compile, packageDoc) := false
+  )
+  .settings(IMCEReleasePlugin.libraryReleaseProcessSettings)
+  .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
+  .settings(IMCEPlugin.aspectJSettings)
+
+def nativeCopyFile(from: File, to: File): Unit = {
+  val target = to.getParentFile
+  if (target.exists() && target.canWrite) {
+    Process(Seq("cp", "-p", from.getAbsolutePath, to.getAbsolutePath), target).! match {
+      case 0 => ()
+      case n => sys.error("Failed to run native cp application!")
+    }
+  }
+}
+
+def nativeCopyDirectory(from: File, to: File): Unit = {
+  Process(Seq("cp", "-rp", from.getAbsolutePath, to.getAbsolutePath), to.getParentFile).! match {
+    case 0 => ()
+    case n => sys.error("Failed to run native cp application!")
+  }
+}
+
+def nativeUnzip(f: File, dir: File): Unit = {
+  IO.createDirectory(dir)
+  Process(Seq("unzip", "-q", f.getAbsolutePath, "-d", dir.getAbsolutePath), dir).! match {
+    case 0 => ()
+    case n => sys.error("Failed to run native unzip application!")
+  }
+}
+
+def singleMatch(up: UpdateReport, f: DependencyFilter): File = {
+  val files: Seq[File] = up.matching(f)
+  require(1 == files.size)
+  files.head
+}
+
+def UpdateProperties(mdInstall: File): RewriteRule = {
+
+  println(s"update properties for md.install=$mdInstall")
+  val binDir = mdInstall / "bin"
+  require(binDir.exists, binDir)
+  val binSub = MD5SubDirectory(
+    name = "bin",
+    files = IO
+      .listFiles(binDir, GlobFilter("*.properties"))
+      .sorted.map(MD5.md5File(binDir)))
+
+  val docGenScriptsDir = mdInstall / "DocGenUserScripts"
+  require(docGenScriptsDir.exists, docGenScriptsDir)
+  val scriptsSub = MD5SubDirectory(
+    name = "DocGenUserScripts",
+    dirs = IO
+      .listFiles(docGenScriptsDir, DirectoryFilter)
+      .sorted.map(MD5.md5Directory(docGenScriptsDir)))
+
+  val libDir = mdInstall / "lib"
+  require(libDir.exists, libDir)
+  val libSub = MD5SubDirectory(
+    name = "lib",
+    files = IO
+      .listFiles(libDir, GlobFilter("*.jar"))
+      .sorted.map(MD5.md5File(libDir)))
+
+  val pluginsDir = mdInstall / "plugins"
+  require(pluginsDir.exists)
+  val pluginsSub = MD5SubDirectory(
+    name = "plugins",
+    dirs = IO
+      .listFiles(pluginsDir, DirectoryFilter)
+      .sorted.map(MD5.md5Directory(pluginsDir)))
+
+  val modelsDir = mdInstall / "modelLibraries"
+  require(modelsDir.exists, libDir)
+  val modelsSub = MD5SubDirectory(
+    name = "modelLibraries",
+    files = IO
+      .listFiles(modelsDir, GlobFilter("*.mdzip") || GlobFilter("*.mdxml"))
+      .sorted.map(MD5.md5File(modelsDir)))
+
+  val profilesDir = mdInstall / "profiles"
+  require(profilesDir.exists, libDir)
+  val profilesSub = MD5SubDirectory(
+    name = "profiles",
+    files = IO
+      .listFiles(profilesDir, GlobFilter("*.mdzip") || GlobFilter("*.mdxml"))
+      .sorted.map(MD5.md5File(profilesDir)))
+
+  val samplesDir = mdInstall / "samples"
+  require(samplesDir.exists, libDir)
+  val samplesSub = MD5SubDirectory(
+    name = "samples",
+    files = IO
+      .listFiles(samplesDir, GlobFilter("*.mdzip") || GlobFilter("*.mdxml"))
+      .sorted.map(MD5.md5File(samplesDir)))
+
+  val all = MD5SubDirectory(
+    name = ".",
+    sub = Seq(binSub, libSub, pluginsSub, modelsSub, profilesSub, scriptsSub, samplesSub))
+
+  new RewriteRule {
+
+    import spray.json._
+    import MD5JsonProtocol._
+
+    override def transform(n: XNode): Seq[XNode] = n match {
+      case <md5></md5> =>
+        <md5>
+          {all.toJson}
+        </md5>
+      case _ =>
+        n
+    }
+  }
+}
+
+lazy val core = Project("root", file("."))
+  .enablePlugins(IMCEGitPlugin)
+  .enablePlugins(IMCEReleasePlugin)
+  .aggregate(enhancedLib)
+  .dependsOn(enhancedLib)
+  .settings(artifactZipFile := {
+    baseDirectory.value / "target" / "package" / "cae.package.aspectj_scala.zip"
+  })
+  .settings(addArtifact(Artifact("cae_md18_0_sp5_aspectj_scala", "zip", "zip"), artifactZipFile).settings: _*)
+  .settings(
+    IMCEKeys.licenseYearOrRange := "2014-2016",
+    IMCEKeys.organizationInfo := IMCEPlugin.Organizations.cae,
+    IMCEKeys.targetJDK := IMCEKeys.jdk18.value,
+    git.baseVersion := Versions.version,
+
+    organization := "gov.nasa.jpl.cae.magicdraw.packages",
+    name := "cae_md18_0_sp5_aspectj_scala",
+    homepage := Some(url("https://github.jpl.nasa.gov/mbee-dev/cae.magicdraw.packages.aspectj_scala")),
+    organizationHomepage := Some(url("http://cae.jpl.nasa.gov")),
+
+    git.baseVersion := Versions.version,
+
+    projectID := {
+      import java.util.{ Date, TimeZone }
+      val formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm")
+      formatter.setTimeZone(TimeZone.getTimeZone("UTC"))
+      val timestamp = formatter.format(new Date)
+
+      val previous = projectID.value
+      previous.extra("buildDate.UTC" -> timestamp)
+    },
+
+    pomPostProcess <<= (pomPostProcess, mdInstallDirectory in ThisBuild) {
+      (previousPostProcess, mdInstallDir) => { (node: XNode) =>
+        println(s"original pom:")
+        println(node)
+        val processedNode: XNode = previousPostProcess(node)
+        println(s"processed pom:")
+        println(processedNode)
+        val mdUpdateDir = UpdateProperties(mdInstallDir)
+        val resultNode: XNode = new RuleTransformer(mdUpdateDir)(processedNode)
+        println(s"result pom:")
+        println(resultNode)
+        resultNode
+      }
+    },
+
+    // disable publishing the main jar produced by `package`
+    publishArtifact in(Compile, packageBin) := false,
+
+    // disable publishing the main API jar
+    publishArtifact in(Compile, packageDoc) := false,
+
+    // disable publishing the main sources jar
+    publishArtifact in(Compile, packageSrc) := false,
+
+    // disable publishing the jar produced by `test:package`
+    publishArtifact in(Test, packageBin) := false,
+
+    // disable publishing the test API jar
+    publishArtifact in(Test, packageDoc) := false,
+
+    // disable publishing the test sources jar
+    publishArtifact in(Test, packageSrc) := false,
+
+    publish <<= publish dependsOn zipInstall,
+    PgpKeys.publishSigned <<= PgpKeys.publishSigned dependsOn zipInstall,
+
+    publish <<= publish dependsOn (publish in enhancedLib),
+    PgpKeys.publishSigned <<= PgpKeys.publishSigned dependsOn (PgpKeys.publishSigned in enhancedLib),
+
+    publishLocal <<= publishLocal dependsOn zipInstall,
+    publishLocal <<= publishLocal dependsOn (publishLocal in enhancedLib),
+
+    makePom <<= makePom dependsOn md5Install,
+
+    md5Install <<=
+      ((baseDirectory, update, streams,
+        mdInstallDirectory in ThisBuild,
+        version
+        ) map {
+        (base, up, s, mdInstallDir, buildVersion) =>
+
+          s.log.info(s"***(2) MD5 of md.install.dir=$mdInstallDir")
+
+      }) dependsOn updateInstall,
 
     updateInstall <<=
-      ( baseDirectory, update, streams,
+      (baseDirectory, update, streams,
         mdInstallDirectory in ThisBuild,
         artifactZipFile,
         packageBin in Compile in enhancedLib, // enhancedLib's jar file
         packageSrc in Compile in enhancedLib, // enhancedLib's sources file
         packageDoc in Compile in enhancedLib, // enhancedLib's javadoc file
         version
-      ) map {
-      (base, up, s, mdInstallDir, zip, enhancedLibJar, enhancedLibSrc, enhancedLibDoc, buildVersion) =>
+        ) map {
+        (base, up, s, mdInstallDir, zip, enhancedLibJar, enhancedLibSrc, enhancedLibDoc, buildVersion) =>
 
-        s.log.info(s"Updating md.install.dir=$mdInstallDir")
+          s.log.info(s"***(1) Updating md.install.dir=$mdInstallDir")
 
-        val fileArtifacts = for {
-          cReport <- up.configurations
-          if Configurations.Compile.name == cReport.configuration
-          oReport <- cReport.details
-          mReport <- oReport.modules
-          (artifact, file) <- mReport.artifacts
-          if "jar" == artifact.extension
-        } yield (oReport.organization, oReport.name, file, artifact)
+          val fileArtifacts = for {
+            cReport <- up.configurations
+            if Configurations.Compile.name == cReport.configuration
+            oReport <- cReport.details
+            mReport <- oReport.modules
+            (artifact, file) <- mReport.artifacts
+            if "jar" == artifact.extension
+          } yield (oReport.organization, oReport.name, file, artifact)
 
-        val fileArtifactsByType = fileArtifacts.groupBy { case (_, _, _, artifact) =>
-          artifact.`classifier`.getOrElse(artifact.`type`)
-        }
-        val jarArtifacts = fileArtifactsByType("jar")
-        val srcArtifacts = fileArtifactsByType("sources")
-        val docArtifacts = fileArtifactsByType("javadoc")
-
-        val jars = {
-          val libs = jarArtifacts.map { case (organization, _, jar, _) =>
-            s.log.info(s"jar: $organization/${jar.name}")
-            IO.copyFile(jar, mdInstallDir / "lib" / organization / jar.name)
-            "lib/" + organization + "/" + jar.name
+          val fileArtifactsByType = fileArtifacts.groupBy { case (_, _, _, a) =>
+            a.`classifier`.getOrElse(a.`type`)
           }
-          IO.copyFile(enhancedLibJar, mdInstallDir / "lib" / "jpl" / enhancedLibJar.name)
-          libs :+ "lib/jpl/" + enhancedLibJar.name
-        }
+          val jarArtifacts = fileArtifactsByType("jar")
+          val srcArtifacts = fileArtifactsByType("sources")
+          val docArtifacts = fileArtifactsByType("javadoc")
 
-        val bootJars = jarArtifacts.flatMap {
-          case ("org.scala-lang", "scala-library", jar, _) =>
-            Some("lib/org.scala-lang/" + jar.name)
-          case ("org.aspectj", "aspectjrt", jar, _) =>
-            Some("lib/org.aspectj/" + jar.name)
-          case ("org.aspectj", "aspectjweaver", jar, _) =>
-            Some("lib/org.aspectj/" + jar.name)
-          case _ =>
-            None
-        }
+          val jars = {
+            val libs = jarArtifacts.map { case (o, _, jar, _) =>
+              s.log.info(s"* copying jar: $o/${jar.name}")
+              IO.copyFile(jar, mdInstallDir / "lib" / o / jar.name)
+              "lib/" + o + "/" + jar.name
+            }
+            IO.copyFile(enhancedLibJar, mdInstallDir / "lib" / "jpl" / enhancedLibJar.name)
+            libs :+ "lib/jpl/" + enhancedLibJar.name
+          }
 
-        val bootClasspathPrefix = bootJars.mkString("","\\\\:","\\\\:")
+          val weaverJar: String = {
+            val weaverJars = jarArtifacts.flatMap {
+              case ("org.aspectj", "aspectjweaver", jar, _) =>
+                Some("lib/org.aspectj/" + jar.name)
+              case _ =>
+                None
+            }
+            require(1 == weaverJars.size)
+            weaverJars.head
+          }
 
-        srcArtifacts.foreach { case (organization, _, jar, _) =>
-          s.log.info(s"source: $organization/${jar.name}")
-          IO.copyFile(jar, mdInstallDir / "lib.sources" / organization / jar.name)
-          "lib.sources/" + organization + "/" + jar.name
-        }
-        IO.copyFile(enhancedLibSrc, mdInstallDir / "lib.sources" / "jpl" / enhancedLibSrc.name)
+          val bootJars = jarArtifacts.flatMap {
+            case ("org.scala-lang", "scala-library", jar, _) =>
+              Some("lib/org.scala-lang/" + jar.name)
+            case ("org.aspectj", "aspectjrt", jar, _) =>
+              Some("lib/org.aspectj/" + jar.name)
+            case ("org.aspectj", "aspectjweaver", jar, _) =>
+              Some("lib/org.aspectj/" + jar.name)
+            case _ =>
+              None
+          }
 
-        docArtifacts.foreach { case (organization, _, jar, _) =>
-          s.log.info(s"javadoc: $organization/${jar.name}")
-          IO.copyFile(jar, mdInstallDir / "lib.javadoc" / organization / jar.name)
-          "lib.javadoc/" + organization + "/" + jar.name
-        }
-        IO.copyFile(enhancedLibDoc, mdInstallDir / "lib.javadoc" / "jpl" / enhancedLibDoc.name)
+          val bootClasspathPrefix = bootJars.mkString("", "\\\\:", "\\\\:")
 
-        val mdBinFolder = mdInstallDir / "bin"
-        val mdPropertiesFiles: Seq[File] = mdBinFolder.listFiles(new java.io.FilenameFilter(){
-          override def accept(dir: File, name: String): Boolean =
-           name.endsWith(".properties")
-        })
+          srcArtifacts.foreach { case (o, _, jar, _) =>
+            s.log.info(s"* copying source: $o/${jar.name}")
+            IO.copyFile(jar, mdInstallDir / "lib.sources" / o / jar.name)
+            "lib.sources/" + o + "/" + jar.name
+          }
+          IO.copyFile(enhancedLibSrc, mdInstallDir / "lib.sources" / "jpl" / enhancedLibSrc.name)
 
-        mdPropertiesFiles.foreach { mdPropertyFile: File =>
+          docArtifacts.foreach { case (o, _, jar, _) =>
+            s.log.info(s"* copying javadoc: $o/${jar.name}")
+            IO.copyFile(jar, mdInstallDir / "lib.javadoc" / o / jar.name)
+            "lib.javadoc/" + o + "/" + jar.name
+          }
+          IO.copyFile(enhancedLibDoc, mdInstallDir / "lib.javadoc" / "jpl" / enhancedLibDoc.name)
 
-          val mdPropertyName = mdPropertyFile.name
-          val unpatchedContents: String = IO.read(mdPropertyFile)
+          val mdBinFolder = mdInstallDir / "bin"
+          val mdPropertiesFiles: Seq[File] = mdBinFolder.listFiles(new java.io.FilenameFilter() {
+            override def accept(dir: File, name: String): Boolean =
+              name.endsWith(".properties")
+          })
 
-          // Remove "-DLOCALCONFIG\=<value>" or "-DLOCALCONFIG=<value>" regardless of what <value> is.
-          val patchedContents1 = unpatchedContents.replaceAll("-DLOCALCONFIG\\\\?=[^ ]* ",
-            "")
+          mdPropertiesFiles.foreach { mdPropertyFile: File =>
 
-          // Remove "-DWINCONFIG\=<value>" or "-DWINCONFIG=<value>" regardless of what <value> is.
-          val patchedContents2 = patchedContents1.replaceAll("-DWINCONFIG\\\\?=[^ ]* ",
-            "")
+            val mdPropertyName = mdPropertyFile.name
+            val unpatchedContents: String = IO.read(mdPropertyFile)
 
-          // Remove "-Dlocal.config.dir.ext\=<value>" or "-Dlocal.config.dir.ext=<value>" regardless of what <value> is.
-          val patchedContents3 = patchedContents2.replaceAll("-Dlocal.config.dir.ext\\\\?=[^ ]* ",
-            "")
+            // Remove "-Dlocal.config.dir.ext\=<value>" or "-Dlocal.config.dir.ext=<value>" regardless of what <value> is.
+            val patchedContents1 = unpatchedContents.replaceAll(
+              "-Dlocal.config.dir.ext\\\\?=[a-zA-Z0-9_.\\\\-]*",
+              "-Dlocal.config.dir.ext\\\\=-aspectj_scala-" + Versions.version)
 
-          // Add AspectJ weaver agent & settings
-          val patchedContents4 = patchedContents3.replaceFirst("JAVA_ARGS=(.*)",
-            "JAVA_ARGS=-javaagent:lib/org.aspectj/aspectjweaver.jar "+
-            "-Daj.weaving.verbose\\\\=true "+
-            "-Dorg.aspectj.weaver.showWeaveInfo\\\\=true $1")
+            // Add AspectJ weaver agent & settings
+            val patchedContents2 = patchedContents1.replaceFirst(
+              "JAVA_ARGS=",
+              s"JAVA_ARGS=-javaagent:$weaverJar " +
+                "-Daj.weaving.verbose\\\\=true " +
+                "-Dorg.aspectj.weaver.showWeaveInfo\\\\=true ")
 
-          // MD config settings
-          val patchedContents5 = patchedContents4.replaceFirst("(JAVA_ARGS=.*)",
-            "$1 -DLOCALCONFIG\\\\=true "+
-            "-DWINCONFIG\\\\=true "+
-            "-Dlocal.config.dir.ext\\\\=-" + Versions.aspectj_scala_package_B + buildVersion)
+            val patchedContents3 = patchedContents2.replaceFirst(
+              "BOOT_CLASSPATH=",
+              "BOOT_CLASSPATH=" + bootClasspathPrefix)
 
-          val patchedContents6 = patchedContents5.replaceFirst("BOOT_CLASSPATH=(.*)",
-            "BOOT_CLASSPATH="+bootClasspathPrefix+"$1")
+            val patchedContents4 = patchedContents3.replaceFirst(
+              "([^_])CLASSPATH=(.*)",
+              jars.mkString("$1CLASSPATH=", "\\\\:", "\\\\:$2"))
 
-          val patchedContents7 = patchedContents6.replaceFirst("([^_])CLASSPATH=(.*)",
-            jars.mkString("$1CLASSPATH=","\\\\:","\\\\:$2"))
+            IO.write(file = mdPropertyFile, content = patchedContents4, append = false)
+          }
+      },
 
-          IO.write(file=mdPropertyFile, content=patchedContents7, append=false)
-        }
+    zipInstall <<=
+      (baseDirectory, update, streams,
+        mdInstallDirectory in ThisBuild,
+        artifactZipFile,
+        makePom, scalaBinaryVersion
+        ) map {
+        (base, up, s, mdInstallDir, zip, pom, sbV) =>
 
-        s.log.info(s"\n# Creating the zip: $zip")
-        val mdInstallDirVersion: File =
-          mdInstallDir.getParentFile / (mdInstallDir.name + Versions.aspectj_scala_package_B + buildVersion)
-        IO.move(mdInstallDir, mdInstallDirVersion)
-        IO.move(mdInstallDirVersion, mdInstallDir / (Versions.aspectj_scala_package_B + buildVersion))
-        IO.zip(allSubpaths(mdInstallDir), zip)
+          s.log.info(s"\n# Creating the zip: $zip")
+          IO.zip(allSubpaths(mdInstallDir), zip)
 
-        zip
-    }
+          zip
+      }
   )
-
+  .settings(IMCEReleasePlugin.packageReleaseProcessSettings)
