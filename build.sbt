@@ -97,14 +97,6 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
 
     libraryDependencies ++= Seq(
 
-      // This dependency will be used to replace all executables & mac-specific applications from the CAE MDK.
-
-      "com.nomagic.magicdraw.application" % "magicdraw" % Versions.magicdraw_no_install % "compile" artifacts
-       Artifact("magicdraw", "zip", "zip"),
-
-      // All executables & mac-specific applications in CAE MDK will be replaced
-      // with those from magicdraw's no-install bundle.
-
       "gov.nasa.jpl.cae.magicdraw.packages" % "cae_md18_0_sp5_mdk" % Versions.mdk_package % "compile" artifacts
         Artifact("cae_md18_0_sp5_mdk", "zip", "zip"),
 
@@ -130,51 +122,6 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
             singleMatch(up, artifactFilter(name = "cae_md18_0_sp5_mdk", `type` = "zip", extension = "zip"))
           s.log.info(s"=> Extracting CAE MDK: $mdkZip")
           nativeUnzip(mdkZip, mdInstallDir)
-
-          val noInstallZip: File =
-            singleMatch(up, artifactFilter(name = "magicdraw", `type` = "zip", extension = "zip"))
-          s.log.info(s"=> Extracting MD's no-install: $noInstallZip")
-          nativeUnzip(noInstallZip, mdAlternateDir)
-
-          // Find all files in no-install that have the executable flag set
-          // and copy their permission flags on their corresponding file
-          // in the installation folder.
-
-          val isExecutable = new FileFilter {
-            def accept(f: File): Boolean =
-              !f.isDirectory && f.canExecute
-          }
-
-          val execFiles = (mdAlternateDir ** isExecutable) pair relativeTo(mdAlternateDir)
-          s.log.info(s"=> ${execFiles.size} executable files")
-          execFiles foreach { case (execFile, execPath) =>
-            val installedFile = mdInstallDir / execPath
-            if (installedFile.exists) {
-              s.log.info(s" - $execPath")
-              installedFile.toScala.setPermissions(execFile.toScala.permissions)
-            }
-          }
-
-          // Find all files in no-install that match the pattern *.exe
-          // and copy their permission flags on their corresponding file
-          // in the installation folder.
-
-          val isWindowsEXE = new FileFilter {
-            def accept(f: File): Boolean =
-              !f.isDirectory && (f.name endsWith ".exe")
-          }
-          val windowsEXEFiles = (mdAlternateDir ** isWindowsEXE) pair relativeTo(mdAlternateDir)
-          s.log.info(s"=> ${windowsEXEFiles.size} windows *.exe files")
-          windowsEXEFiles foreach { case (exeFile, exePath) =>
-            val installedFile = mdInstallDir / exePath
-            if (installedFile.exists) {
-              import java.nio.file.attribute.PosixFilePermission
-              s.log.info(s" - $exePath")
-              installedFile.toScala.addPermission(PosixFilePermission.OWNER_EXECUTE)
-              installedFile.toScala.addPermission(PosixFilePermission.GROUP_EXECUTE)
-              installedFile.toScala.addPermission(PosixFilePermission.OTHERS_EXECUTE)
-            }
-          }
 
         } else
           s.log.info(
