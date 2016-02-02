@@ -62,15 +62,7 @@ fullResolvers ++= Seq(
   new MavenRepository("cae plugins-release-local", "https://cae-artrepo.jpl.nasa.gov/artifactory/plugins-release-local")
 )
 
-lazy val artifactZipFile = taskKey[File]("Location of the zip artifact file")
-
 lazy val extractArchives = TaskKey[Seq[Attributed[File]]]("extract-archives", "Extracts ZIP files")
-
-lazy val updateInstall = TaskKey[Unit]("update-install", "Update the MD Installation directory")
-
-lazy val md5Install = TaskKey[Unit]("md5-install", "Produce an MD5 report of the MD Installation directory")
-
-lazy val zipInstall = TaskKey[File]("zip-install", "Zip the MD Installation directory")
 
 lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
   .enablePlugins(IMCEGitPlugin)
@@ -101,10 +93,10 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
         Artifact("cae_md18_0_sp5_mdk", "zip", "zip"),
 
       "gov.nasa.jpl.imce.thirdParty" %% "all-scala-libraries" % Versions.jpl_mbee_common_scala_libraries artifacts
-        Artifact("all-scala-libraries", "zip", "zip"),
+        Artifact("all-scala-libraries", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
       "gov.nasa.jpl.imce.thirdParty" %% "all-aspectj_libraries" % Versions.jpl_mbee_common_scala_libraries artifacts
-        Artifact("all-aspectj_libraries", "zip", "zip")
+        Artifact("all-aspectj_libraries", "zip", "zip", Some("resource"), Seq(), None, Map())
     ),
 
     resolvers +=  new MavenRepository(
