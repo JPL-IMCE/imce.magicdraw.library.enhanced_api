@@ -17,4 +17,4 @@
     "<url> is a remote Maven repository URL")
 }
 
-addSbtPlugin("gov.nasa.jpl.imce" % "imce-sbt-plugin" % "1.41")
+addSbtPlugin("gov.nasa.jpl.imce" % "imce-sbt-plugin" % "1.42")
