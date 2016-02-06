@@ -89,8 +89,8 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
 
     libraryDependencies ++= Seq(
 
-      "gov.nasa.jpl.cae.magicdraw.packages" % "cae_md18_0_sp5_mdk" % Versions.mdk_package % "compile" artifacts
-        Artifact("cae_md18_0_sp5_mdk", "zip", "zip"),
+      "gov.nasa.jpl.cae.magicdraw.packages" % "cae_md18_0_sp5_vendor" % Versions.vendor_package % "compile" artifacts
+        Artifact("cae_md18_0_sp5_vendor", "zip", "zip"),
 
       "gov.nasa.jpl.imce.thirdParty" %% "aspectj_libraries" % Versions.aspectj_libraries % "compile" artifacts
         Artifact("aspectj_libraries", "zip", "zip", Some("resource"), Seq(), None, Map())
@@ -107,10 +107,10 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
 
         if (!mdInstallDir.exists) {
 
-          val mdkZip: File =
-            singleMatch(up, artifactFilter(name = "cae_md18_0_sp5_mdk", `type` = "zip", extension = "zip"))
-          s.log.info(s"=> Extracting CAE MDK: $mdkZip")
-          nativeUnzip(mdkZip, mdInstallDir)
+          val vendorZip: File =
+            singleMatch(up, artifactFilter(name = "cae_md18_0_sp5_vendor", `type` = "zip", extension = "zip"))
+          s.log.info(s"=> Extracting CAE Vendor: $vendorZip")
+          nativeUnzip(vendorZip, mdInstallDir)
 
         } else
           s.log.info(
