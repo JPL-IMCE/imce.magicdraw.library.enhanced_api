@@ -125,6 +125,8 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
           jar <- Files.walk(libPath).iterator().filter(_.toString.endsWith(".jar")).map(_.toFile)
         } yield Attributed.blank(jar)
 
+        s.log.info(s"=> Adding ${mdJars.size} unmanaged jars")
+
         mdJars.toSeq
     },
 
