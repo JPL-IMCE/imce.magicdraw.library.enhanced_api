@@ -62,8 +62,6 @@ fullResolvers ++= Seq(
   new MavenRepository("cae plugins-release-local", "https://cae-artrepo.jpl.nasa.gov/artifactory/plugins-release-local")
 )
 
-lazy val extractArchives = TaskKey[Seq[Attributed[File]]]("extract-archives", "Extracts ZIP files")
-
 lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
   .enablePlugins(IMCEGitPlugin)
   .enablePlugins(IMCEReleasePlugin)
@@ -115,6 +113,12 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
         } else
           s.log.info(
             s"=> use existing md.install.dir=$mdInstallDir")
+    },
+
+    unmanagedJars in Compile <++= (baseDirectory, update, streams,
+      mdInstallDirectory in ThisBuild,
+      extractArchives) map {
+      (base, up, s, mdInstallDir, _) =>
 
         val libPath = (mdInstallDir / "lib").toPath
         val mdJars = for {
@@ -123,8 +127,6 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
 
         mdJars.toSeq
     },
-
-    unmanagedJars in Compile <++= extractArchives,
 
     compile <<= (compile in Compile) dependsOn extractArchives,
 
