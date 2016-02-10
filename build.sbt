@@ -120,14 +120,12 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
       extractArchives) map {
       (base, up, s, mdInstallDir, _) =>
 
-        val libPath = (mdInstallDir / "lib").toPath
-        val mdJars = for {
-          jar <- Files.walk(libPath).iterator().filter(_.toString.endsWith(".jar")).map(_.toFile)
-        } yield Attributed.blank(jar)
+        val libJars = (mdInstallDir / "lib") ** "*.jar"
+        val mdJars = libJars.get.map(Attributed.blank(_))
 
         s.log.info(s"=> Adding ${mdJars.size} unmanaged jars")
 
-        mdJars.toSeq
+        mdJars
     },
 
     compile <<= (compile in Compile) dependsOn extractArchives,
