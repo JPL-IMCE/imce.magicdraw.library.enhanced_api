@@ -18,6 +18,8 @@ import gov.nasa.jpl.imce.sbt._
 
 useGpg := true
 
+logLevel in Compile := Level.Debug
+
 val cae_artifactory_ext_releases =
   Resolver.url(
     "Artifactory Realm",
