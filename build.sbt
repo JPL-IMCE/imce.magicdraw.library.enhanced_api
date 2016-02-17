@@ -57,8 +57,8 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
 
     libraryDependencies ++= Seq(
 
+      // extra("artifact.kind" -> "magicdraw.package.zip")
       "gov.nasa.jpl.cae.magicdraw.packages" % "cae_md18_0_sp5_vendor" % Versions_cae_vendor_package.version
-        extra("artifact.kind" -> "magicdraw.package.zip")
         artifacts Artifact("cae_md18_0_sp5_vendor", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
       "gov.nasa.jpl.imce.thirdParty" %% "aspectj_libraries" % Versions_aspectj_libraries.version
@@ -74,7 +74,8 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
           val pairs = for {
             cReport <- up.configurations
             mReport <- cReport.modules
-            if mReport.module.extraAttributes.get("artifact.kind").toIterator.contains("magicdraw.package.zip")
+            //if mReport.module.extraAttributes.get("artifact.kind").toIterator.contains("magicdraw.package.zip")
+            if mReport.module.organization == "gov.nasa.jpl.cae.magicdraw.packages"
             (artifact, archive) <- mReport.artifacts
           } yield artifact -> archive
 
