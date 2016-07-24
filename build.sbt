@@ -58,8 +58,8 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
     libraryDependencies ++= Seq(
 
       // extra("artifact.kind" -> "magicdraw.package.zip")
-      "gov.nasa.jpl.cae.magicdraw.packages" % "cae_md18_0_sp5_vendor" % Versions_cae_vendor_package.version
-        artifacts Artifact("cae_md18_0_sp5_vendor", "zip", "zip", Some("resource"), Seq(), None, Map()),
+      "gov.nasa.jpl.cae.magicdraw.packages" % Versions_cae_vendor_package.name % Versions_cae_vendor_package.version
+        artifacts Artifact(Versions_cae_vendor_package.name, "zip", "zip", Some("resource"), Seq(), None, Map()),
 
       "gov.nasa.jpl.imce.thirdParty" %% "aspectj_libraries" % Versions_aspectj_libraries.version
         % "compile" artifacts
