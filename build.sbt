@@ -10,6 +10,8 @@ import gov.nasa.jpl.imce.sbt._
 
 useGpg := true
 
+updateOptions := updateOptions.value.withCachedResolution(true)
+
 shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
 
 lazy val mdInstallDirectory = SettingKey[File]("md-install-directory", "MagicDraw Installation Directory")
