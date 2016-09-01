@@ -8,6 +8,12 @@ This library provides the following enhancements to MagicDraw's APIs:
 
 - [Load Module Migration Interceptor](src/main/scala/gov/nasa/jpl/magicdraw/enhanced/migration/LocalModuleMigrationInterceptor.scala)
 
+# Building
+
+At this time, this project cannot be built on the public [JPL-IMCE CI](https://travis-ci.org/JPL-IMCE) because
+of a compile & runtime dependency on a Maven artifact for MagicDraw's libaries like the "no-install.zip" product download.
+See: https://support.nomagic.com/browse/MDUMLCS-21218
+
 ## About using AspectJ in MagicDraw
 
 To enable these enhancements at runtime in MD, this library uses the so-called

@@ -8,8 +8,6 @@ import com.typesafe.sbt.SbtAspectj.AspectjKeys._
 
 import gov.nasa.jpl.imce.sbt._
 
-useGpg := true
-
 updateOptions := updateOptions.value.withCachedResolution(true)
 
 shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
@@ -17,7 +15,7 @@ shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project
 lazy val mdInstallDirectory = SettingKey[File]("md-install-directory", "MagicDraw Installation Directory")
 
 mdInstallDirectory in ThisBuild :=
-  (baseDirectory in ThisBuild).value / "cae.md.package"
+  (baseDirectory in ThisBuild).value / "target" / "md.package"
 
 cleanFiles += (mdInstallDirectory in ThisBuild).value
 
@@ -28,18 +26,13 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
   .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
   .settings(IMCEPlugin.aspectJSettings)
   .settings(
-    IMCEKeys.licenseYearOrRange := "2014-2016",
+    IMCEKeys.licenseYearOrRange := "2015-2016",
     IMCEKeys.organizationInfo := IMCEPlugin.Organizations.cae,
     IMCEKeys.targetJDK := IMCEKeys.jdk18.value,
     git.baseVersion := Versions.version,
 
     buildInfoPackage := "imce.magicdraw.library.enhanced_api",
     buildInfoKeys ++= Seq[BuildInfoKey](BuildInfoKey.action("buildDateUTC") { buildUTCDate.value }),
-
-    homepage := Some(url("https://github.jpl.nasa.gov/imce/imce.magicdraw.library.enhanced_api")),
-    organizationHomepage := Some(url("http://imce.jpl.nasa.gov")),
-
-    organization := "gov.nasa.jpl.imce.magicdraw.libraries",
 
     projectID := {
       val previous = projectID.value
@@ -57,15 +50,18 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
 
     aspectjVersion in Aspectj := Versions.org_aspectj_version,
 
+    resolvers += Resolver.bintrayRepo("jpl-imce", "gov.nasa.jpl.imce"),
+    resolvers += Resolver.bintrayRepo("tiwg", "org.omg.tiwg"),
+
     libraryDependencies ++= Seq(
 
       // extra("artifact.kind" -> "magicdraw.package.zip")
       "gov.nasa.jpl.cae.magicdraw.packages" % Versions_cae_vendor_package.name % Versions_cae_vendor_package.version
         artifacts Artifact(Versions_cae_vendor_package.name, "zip", "zip", Some("resource"), Seq(), None, Map()),
 
-      "gov.nasa.jpl.imce.thirdParty" %% "aspectj_libraries" % Versions_aspectj_libraries.version
+      "gov.nasa.jpl.imce" %% "imce.third_party.aspectj_libraries" % Versions_aspectj_libraries.version
         % "compile" artifacts
-        Artifact("aspectj_libraries", "zip", "zip", Some("resource"), Seq(), None, Map())
+        Artifact("imce.third_party.aspectj_libraries", "zip", "zip", Some("resource"), Seq(), None, Map())
     ),
 
     extractArchives <<= (baseDirectory, update, streams, mdInstallDirectory in ThisBuild) map {

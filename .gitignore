@@ -1,7 +1,9 @@
 .ensime*
 .idea
 cae.md.package
+local.*
 project/project
 project/target
 target
-version.sbt
+local.*
+gh-pages/
