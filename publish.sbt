@@ -1,3 +1,4 @@
+//  jfrog rt upload --regexp=true "target/scala-2.11/imce.(.*)" libs-release-local/gov/nasa/jpl/imce/imce.magicdraw.library.enhanced_api_2.11/
 
 PgpKeys.useGpg := true
 
