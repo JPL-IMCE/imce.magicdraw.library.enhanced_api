@@ -94,7 +94,7 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
           val out = new java.io.PrintWriter(new java.io.FileOutputStream(script))
           out.println("#!/bin/bash")
           out.println(parts.map(_.getAbsolutePath).mkString("cat ", " ", s" > ${merged.getAbsolutePath}"))
-          out.println(s"zip -qFF ${merged.getAbsolutePath} --out ${zip.getAbsolutePath}")
+          out.println(s"zip -FF ${merged.getAbsolutePath} --out ${zip.getAbsolutePath}")
           out.println(s"unzip -q ${zip.getAbsolutePath} -d ${mdInstallDir.getAbsolutePath}")
           out.close()
 
