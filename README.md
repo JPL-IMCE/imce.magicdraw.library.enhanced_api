@@ -1,5 +1,8 @@
 # IMCE MagicDraw Library for AspectJ-based MD API enhancements
 
+[![Build Status](https://travis-ci.org/JPL-IMCE/imce.magicdraw.library.enhanced_api.svg?branch=master)](https://travis-ci.org/JPL-IMCE/imce.magicdraw.library.enhanced_api)
+ [ ![Download](https://api.bintray.com/packages/jpl-imce/gov.nasa.jpl.imce/imce.magicdraw.library.enhanced_api/images/download.svg) ](https://bintray.com/jpl-imce/gov.nasa.jpl.imce/imce.magicdraw.library.enhanced_api/_latestVersion)
+ 
 This library provides the following enhancements to MagicDraw's APIs:
 
 - [Enhanced MD Browser context action](src/main/scala/gov/nasa/jpl/magicdraw/enhanced/ui/browser/EnhancedBrowserContextAMConfigurator.scala)
@@ -7,12 +10,6 @@ This library provides the following enhancements to MagicDraw's APIs:
 - [Enhanced MD Draw Path action](src/main/scala/gov/nasa/jpl/magicdraw/enhanced/actions/paths/EnhancedDrawPathAction.scala)
 
 - [Load Module Migration Interceptor](src/main/scala/gov/nasa/jpl/magicdraw/enhanced/migration/LocalModuleMigrationInterceptor.scala)
-
-# Building
-
-At this time, this project cannot be built on the public [JPL-IMCE CI](https://travis-ci.org/JPL-IMCE) because
-of a compile & runtime dependency on a Maven artifact for MagicDraw's libaries like the "no-install.zip" product download.
-See: https://support.nomagic.com/browse/MDUMLCS-21218
 
 ## About using AspectJ in MagicDraw
 

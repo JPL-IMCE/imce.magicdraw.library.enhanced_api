@@ -1,11 +1,9 @@
-import java.io.File
+import java.io.{File, SequenceInputStream}
 
 import sbt._
 import Keys._
-
 import com.typesafe.sbt.SbtAspectj._
 import com.typesafe.sbt.SbtAspectj.AspectjKeys._
-
 import gov.nasa.jpl.imce.sbt._
 
 updateOptions := updateOptions.value.withCachedResolution(true)
@@ -55,9 +53,13 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
 
     libraryDependencies ++= Seq(
 
-      // extra("artifact.kind" -> "magicdraw.package.zip")
-      "gov.nasa.jpl.cae.magicdraw.packages" % Versions_cae_vendor_package.name % Versions_cae_vendor_package.version
-        artifacts Artifact(Versions_cae_vendor_package.name, "zip", "zip", Some("resource"), Seq(), None, Map()),
+      "org.omg.tiwg.vendor.nomagic"
+        % "com.nomagic.magicdraw.package"
+        % "18.0-sp6" artifacts Artifact("com.nomagic.magicdraw.package", "zip", "zip", Some("part1"), Seq(), None, Map()),
+
+      "org.omg.tiwg.vendor.nomagic"
+        % "com.nomagic.magicdraw.package"
+        % "18.0-sp6" artifacts Artifact("com.nomagic.magicdraw.package", "zip", "zip", Some("part2"), Seq(), None, Map()),
 
       "gov.nasa.jpl.imce" %% "imce.third_party.aspectj_libraries" % Versions_aspectj_libraries.version
         % "compile" artifacts
@@ -69,20 +71,36 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
 
         if (!mdInstallDir.exists) {
 
-          val pairs = for {
+          val parts = (for {
             cReport <- up.configurations
+            if cReport.configuration == "compile"
             mReport <- cReport.modules
-            //if mReport.module.extraAttributes.get("artifact.kind").toIterator.contains("magicdraw.package.zip")
-            if mReport.module.organization == "gov.nasa.jpl.cae.magicdraw.packages"
+            if mReport.module.organization == "org.omg.tiwg.vendor.nomagic"
             (artifact, archive) <- mReport.artifacts
-          } yield artifact -> archive
+          } yield archive).sorted
 
-          val mdZips = pairs.toMap
-          require(mdZips.size == 1)
-          mdZips.foreach { case (a, f) =>
-              s.log.info(s" => Extracting $a")
-              IO.unzip(f, mdInstallDir)
-          }
+          s.log.info(s"Extracting MagicDraw from ${parts.size} parts:")
+          parts.foreach { p => s.log.info(p.getAbsolutePath) }
+
+          val merged = File.createTempFile("md_merged", ".zip")
+          println(s"merged: ${merged.getAbsolutePath}")
+
+          val zip = File.createTempFile("md_no_install", ".zip")
+          println(s"zip: ${zip.getAbsolutePath}")
+
+          val script = File.createTempFile("unzip_md", ".sh")
+          println(s"script: ${script.getAbsolutePath}")
+
+          val out = new java.io.PrintWriter(new java.io.FileOutputStream(script))
+          out.println("#!/bin/bash")
+          out.println(parts.map(_.getAbsolutePath).mkString("cat ", " ", s" > ${merged.getAbsolutePath}"))
+          out.println(s"zip -FF ${merged.getAbsolutePath} --out ${zip.getAbsolutePath}")
+          out.println(s"unzip -q ${zip.getAbsolutePath} -d ${mdInstallDir.getAbsolutePath}")
+          out.close()
+
+          val result = sbt.Process(command="/bin/bash", arguments=Seq[String](script.getAbsolutePath)).!
+
+          require(0 <= result && result <= 2, s"Failed to execute script (exit=$result): ${script.getAbsolutePath}")
 
         } else
           s.log.info(
