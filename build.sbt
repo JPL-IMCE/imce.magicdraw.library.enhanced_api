@@ -66,57 +66,63 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
         Artifact("imce.third_party.aspectj_libraries", "zip", "zip", Some("resource"), Seq(), None, Map())
     ),
 
-    extractArchives <<= (baseDirectory, update, streams, mdInstallDirectory in ThisBuild) map {
-      (base, up, s, mdInstallDir) =>
+    extractArchives := {
+      val base = baseDirectory.value
+      val up = update.value
+      val s = streams.value
+      val mdInstallDir = (mdInstallDirectory in ThisBuild).value
 
-        if (!mdInstallDir.exists) {
+      if (!mdInstallDir.exists) {
 
-          val parts = (for {
-            cReport <- up.configurations
-            if cReport.configuration == "compile"
-            mReport <- cReport.modules
-            if mReport.module.organization == "org.omg.tiwg.vendor.nomagic"
-            (artifact, archive) <- mReport.artifacts
-          } yield archive).sorted
+        val parts = (for {
+          cReport <- up.configurations
+          if cReport.configuration == "compile"
+          mReport <- cReport.modules
+          if mReport.module.organization == "org.omg.tiwg.vendor.nomagic"
+          (artifact, archive) <- mReport.artifacts
+        } yield archive).sorted
 
-          s.log.info(s"Extracting MagicDraw from ${parts.size} parts:")
-          parts.foreach { p => s.log.info(p.getAbsolutePath) }
+        s.log.info(s"Extracting MagicDraw from ${parts.size} parts:")
+        parts.foreach { p => s.log.info(p.getAbsolutePath) }
 
-          val merged = File.createTempFile("md_merged", ".zip")
-          println(s"merged: ${merged.getAbsolutePath}")
+        val merged = File.createTempFile("md_merged", ".zip")
+        println(s"merged: ${merged.getAbsolutePath}")
 
-          val zip = File.createTempFile("md_no_install", ".zip")
-          println(s"zip: ${zip.getAbsolutePath}")
+        val zip = File.createTempFile("md_no_install", ".zip")
+        println(s"zip: ${zip.getAbsolutePath}")
 
-          val script = File.createTempFile("unzip_md", ".sh")
-          println(s"script: ${script.getAbsolutePath}")
+        val script = File.createTempFile("unzip_md", ".sh")
+        println(s"script: ${script.getAbsolutePath}")
 
-          val out = new java.io.PrintWriter(new java.io.FileOutputStream(script))
-          out.println("#!/bin/bash")
-          out.println(parts.map(_.getAbsolutePath).mkString("cat ", " ", s" > ${merged.getAbsolutePath}"))
-          out.println(s"zip -FF ${merged.getAbsolutePath} --out ${zip.getAbsolutePath}")
-          out.println(s"unzip -q ${zip.getAbsolutePath} -d ${mdInstallDir.getAbsolutePath}")
-          out.close()
+        val out = new java.io.PrintWriter(new java.io.FileOutputStream(script))
+        out.println("#!/bin/bash")
+        out.println(parts.map(_.getAbsolutePath).mkString("cat ", " ", s" > ${merged.getAbsolutePath}"))
+        out.println(s"zip -FF ${merged.getAbsolutePath} --out ${zip.getAbsolutePath}")
+        out.println(s"unzip -q ${zip.getAbsolutePath} -d ${mdInstallDir.getAbsolutePath}")
+        out.close()
 
-          val result = sbt.Process(command="/bin/bash", arguments=Seq[String](script.getAbsolutePath)).!
+        val result = sbt.Process(command = "/bin/bash", arguments = Seq[String](script.getAbsolutePath)).!
 
-          require(0 <= result && result <= 2, s"Failed to execute script (exit=$result): ${script.getAbsolutePath}")
+        require(0 <= result && result <= 2, s"Failed to execute script (exit=$result): ${script.getAbsolutePath}")
 
-        } else
-          s.log.info(
-            s"=> use existing md.install.dir=$mdInstallDir")
+      } else
+        s.log.info(
+          s"=> use existing md.install.dir=$mdInstallDir")
     },
 
-    unmanagedJars in Compile <++= (baseDirectory, update, streams,
-      mdInstallDirectory in ThisBuild, extractArchives) map {
-      (base, up, s, mdInstallDir, _) =>
+    unmanagedJars in Compile ++= {
+      val base = baseDirectory.value
+      val up = update.value
+      val s = streams.value
+      val mdInstallDir = (mdInstallDirectory in ThisBuild).value
+      val _ = extractArchives.value
 
-        val libJars = (mdInstallDir / "lib") ** "*.jar"
-        val mdJars = libJars.get.map(Attributed.blank)
+      val libJars = (mdInstallDir / "lib") ** "*.jar"
+      val mdJars = libJars.get.map(Attributed.blank)
 
-        s.log.info(s"=> Adding ${mdJars.size} unmanaged jars")
+      s.log.info(s"=> Adding ${mdJars.size} unmanaged jars")
 
-        mdJars
+      mdJars
     },
 
     compile <<= (compile in Compile) dependsOn extractArchives,
