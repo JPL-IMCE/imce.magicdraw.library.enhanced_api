@@ -125,7 +125,10 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
       mdJars
     },
 
-    compile <<= (compile in Compile) dependsOn extractArchives,
+    compile in Compile := {
+      val _ = extractArchives.value
+      (compile in Compile).value
+    },
 
     // disable scaladoc to avoid the errors:
     // [error] /opt/local/imce/users/nfr/github.imce/cae.magicdraw.package.aspectj_scala/enhancedLib/src/main/scala/gov/nasa/jpl/magicdraw/enhanced/ui/browser/EnhancedBrowserContextAMConfigurator.scala:58: Tag '@Pointcut' is not recognised
