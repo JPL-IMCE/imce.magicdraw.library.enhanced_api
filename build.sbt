@@ -58,6 +58,7 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
     resolvers += Resolver.bintrayRepo("jpl-imce", "gov.nasa.jpl.imce"),
     resolvers += Resolver.bintrayRepo("tiwg", "org.omg.tiwg"),
     resolvers += Resolver.bintrayRepo("tiwg", "org.omg.tiwg.vendor.nomagic"),
+    resolvers += "Artima Maven Repository" at "http://repo.artima.com/releases",
 
     libraryDependencies ++= Seq(
 
@@ -150,7 +151,7 @@ def downloadMagicDraw
     // Get the credentials based on host
     credentials
       .flatMap {
-        case dc: DirectCredentials if dc.host.equals(mdNoInstallZipDownloadURL.getHost) =>
+        case dc: DirectCredentials if dc.host == mdNoInstallZipDownloadURL.getHost =>
           Some(dc)
         case _ =>
           None
