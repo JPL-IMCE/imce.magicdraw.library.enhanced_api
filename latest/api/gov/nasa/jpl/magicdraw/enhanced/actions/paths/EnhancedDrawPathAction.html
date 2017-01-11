@@ -1,0 +1,1756 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>EnhancedDrawPathAction - gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction</title>
+          <meta name="description" content="EnhancedDrawPathAction - gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction" />
+          <meta name="keywords" content="EnhancedDrawPathAction gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../../../../index.html';
+            var hash = 'gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <img alt="Class" src="../../../../../../../lib/class_big.png" />
+        <p id="owner"><a href="../../../../../../package.html" class="extype" name="gov">gov</a>.<a href="../../../../../package.html" class="extype" name="gov.nasa">nasa</a>.<a href="../../../../package.html" class="extype" name="gov.nasa.jpl">jpl</a>.<a href="../../../package.html" class="extype" name="gov.nasa.jpl.magicdraw">magicdraw</a>.<a href="../../package.html" class="extype" name="gov.nasa.jpl.magicdraw.enhanced">enhanced</a>.<a href="../package.html" class="extype" name="gov.nasa.jpl.magicdraw.enhanced.actions">actions</a>.<a href="package.html" class="extype" name="gov.nasa.jpl.magicdraw.enhanced.actions.paths">paths</a></p>
+        <h1>EnhancedDrawPathAction</h1><h3><span class="morelinks"><div>Related Doc:
+            <a href="package.html" class="extype" name="gov.nasa.jpl.magicdraw.enhanced.actions.paths">package paths</a>
+          </div></span></h3><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) ">EnhancedDrawPathAction</span><span class="result"> extends <span class="extype" name="com.nomagic.magicdraw.ui.actions.DrawPathDiagramAction">DrawPathDiagramAction</span></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> </p></dd></dl><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="com.nomagic.magicdraw.ui.actions.DrawPathDiagramAction">DrawPathDiagramAction</span>, <span class="extype" name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction">BaseDiagramAction</span>, <span class="extype" name="com.nomagic.magicdraw.ui.actions.DefaultDiagramStateAction">DefaultDiagramStateAction</span>, <span class="extype" name="com.nomagic.magicdraw.actions.DiagramAction">DiagramAction</span>, <span class="extype" name="com.nomagic.magicdraw.actions.MDStateAction">MDStateAction</span>, <span class="extype" name="com.nomagic.actions.NMStateAction">NMStateAction</span>, <span class="extype" name="com.nomagic.actions.NMAction">NMAction</span>, <span class="extype" name="java.lang.Comparable">Comparable</span>[<span class="extype" name="java.lang.Comparable.T">T</span>], <span class="extype" name="javax.swing.AbstractAction">AbstractAction</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="java.lang.Cloneable">Cloneable</span>, <span class="extype" name="javax.swing.Action">Action</span>, <span class="extype" name="java.awt.event.ActionListener">ActionListener</span>, <span class="extype" name="java.util.EventListener">EventListener</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By Inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction"><span>EnhancedDrawPathAction</span></li><li class="in" name="com.nomagic.magicdraw.ui.actions.DrawPathDiagramAction"><span>DrawPathDiagramAction</span></li><li class="in" name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction"><span>BaseDiagramAction</span></li><li class="in" name="com.nomagic.magicdraw.ui.actions.DefaultDiagramStateAction"><span>DefaultDiagramStateAction</span></li><li class="in" name="com.nomagic.magicdraw.actions.DiagramAction"><span>DiagramAction</span></li><li class="in" name="com.nomagic.magicdraw.actions.MDStateAction"><span>MDStateAction</span></li><li class="in" name="com.nomagic.actions.NMStateAction"><span>NMStateAction</span></li><li class="in" name="com.nomagic.actions.NMAction"><span>NMAction</span></li><li class="in" name="java.lang.Comparable"><span>Comparable</span></li><li class="in" name="javax.swing.AbstractAction"><span>AbstractAction</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="java.lang.Cloneable"><span>Cloneable</span></li><li class="in" name="javax.swing.Action"><span>Action</span></li><li class="in" name="java.awt.event.ActionListener"><span>ActionListener</span></li><li class="in" name="java.util.EventListener"><span>EventListener</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show All</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(finalizationAction:com.nomagic.magicdraw.uml.symbols.manipulators.drawactions.AdditionalDrawAction,diagram:com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement,ID:String,name:String,key:javax.swing.KeyStroke,largeIcon:javax.swing.Icon):gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction"></a>
+      <a id="&lt;init&gt;:EnhancedDrawPathAction"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">EnhancedDrawPathAction</span><span class="params">(<span name="finalizationAction">finalizationAction: <span class="extype" name="com.nomagic.magicdraw.uml.symbols.manipulators.drawactions.AdditionalDrawAction">AdditionalDrawAction</span></span>, <span name="diagram">diagram: <span class="extype" name="com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement">DiagramPresentationElement</span></span>, <span name="ID">ID: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="key">key: <span class="extype" name="javax.swing.KeyStroke">KeyStroke</span></span>, <span name="largeIcon">largeIcon: <span class="extype" name="javax.swing.Icon">Icon</span></span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@&lt;init&gt;(finalizationAction:com.nomagic.magicdraw.uml.symbols.manipulators.drawactions.AdditionalDrawAction,diagram:com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement,ID:String,name:String,key:javax.swing.KeyStroke,largeIcon:javax.swing.Icon):gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Abstract Value Members</h3>
+              <ol><li name="java.lang.Comparable#compareTo" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="compareTo(x$1:T):Int"></a>
+      <a id="compareTo(T):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">compareTo</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.lang.Comparable.T">T</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@compareTo(x$1:T):Int" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Comparable</dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.DrawPathDiagramAction#createElement" visbl="prt" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="createElement():com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element"></a>
+      <a id="createElement():Element"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createElement</span><span class="params">()</span><span class="result">: <span class="extype" name="com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element">Element</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@createElement():com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>DrawPathDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@OpenApi</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        <div id="values" class="values members">
+              <h3>Concrete Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@##():Int" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMStateAction#accept" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="accept(x$1:com.nomagic.actions.ActionsVisitor):Unit"></a>
+      <a id="accept(ActionsVisitor):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">accept</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="com.nomagic.actions.ActionsVisitor">ActionsVisitor</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@accept(x$1:com.nomagic.actions.ActionsVisitor):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMStateAction → NMAction</dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction#actionPerformed" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="actionPerformed(x$1:java.awt.event.ActionEvent):Unit"></a>
+      <a id="actionPerformed(ActionEvent):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">actionPerformed</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.awt.event.ActionEvent">ActionEvent</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@actionPerformed(x$1:java.awt.event.ActionEvent):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>BaseDiagramAction → MDStateAction → NMStateAction → NMAction → ActionListener</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@OpenApi</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#addAction" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="addAction(x$1:com.nomagic.actions.NMAction):Unit"></a>
+      <a id="addAction(NMAction):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">addAction</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="com.nomagic.actions.NMAction">NMAction</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@addAction(x$1:com.nomagic.actions.NMAction):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#addPropertyChangeListener" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="addPropertyChangeListener(x$1:java.beans.PropertyChangeListener):Unit"></a>
+      <a id="addPropertyChangeListener(PropertyChangeListener):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">addPropertyChangeListener</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.beans.PropertyChangeListener">PropertyChangeListener</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@addPropertyChangeListener(x$1:java.beans.PropertyChangeListener):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction → AbstractAction → Action</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#addShotcut" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="addShotcut(x$1:javax.swing.KeyStroke):Unit"></a>
+      <a id="addShotcut(KeyStroke):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">addShotcut</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="javax.swing.KeyStroke">KeyStroke</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@addShotcut(x$1:javax.swing.KeyStroke):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#addWeakPropertyChangeListener" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="addWeakPropertyChangeListener(x$1:java.beans.PropertyChangeListener):Unit"></a>
+      <a id="addWeakPropertyChangeListener(PropertyChangeListener):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">addWeakPropertyChangeListener</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.beans.PropertyChangeListener">PropertyChangeListener</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@addWeakPropertyChangeListener(x$1:java.beans.PropertyChangeListener):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#clone" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@clone():Object" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction → AbstractAction → AnyRef</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#compareTo" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="compareTo(x$1:Any):Int"></a>
+      <a id="compareTo(Any):Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">compareTo</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@compareTo(x$1:Any):Int" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#createMenuItem" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="createMenuItem(x$1:com.nomagic.actions.c):javax.swing.JMenuItem"></a>
+      <a id="createMenuItem(c):JMenuItem"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createMenuItem</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="com.nomagic.actions.c">c</span></span>)</span><span class="result">: <span class="extype" name="javax.swing.JMenuItem">JMenuItem</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@createMenuItem(x$1:com.nomagic.actions.c):javax.swing.JMenuItem" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction#createState" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="createState():com.nomagic.magicdraw.ui.states.State"></a>
+      <a id="createState():State"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createState</span><span class="params">()</span><span class="result">: <span class="extype" name="com.nomagic.magicdraw.ui.states.State">State</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@createState():com.nomagic.magicdraw.ui.states.State" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This will be advised...</p><div class="fullcomment"><div class="comment cmt"><p>This will be advised...
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction">EnhancedDrawPathAction</a> → DrawPathDiagramAction → BaseDiagramAction</dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction → AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#firePropertyChange" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="firePropertyChange(x$1:String,x$2:Any,x$3:Any):Unit"></a>
+      <a id="firePropertyChange(String,Any,Any):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">firePropertyChange</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.lang.String">String</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Any">Any</span></span>, <span name="arg2">arg2: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@firePropertyChange(x$1:String,x$2:Any,x$3:Any):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$actions.html" class="extype" name="com.nomagic.actions">com.nomagic.actions</a>] </dd><dt>Definition Classes</dt><dd>NMAction → AbstractAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#getActions" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getActions():java.util.List[com.nomagic.actions.NMAction]"></a>
+      <a id="getActions():List[NMAction]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getActions</span><span class="params">()</span><span class="result">: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.nomagic.actions.NMAction">NMAction</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getActions():java.util.List[com.nomagic.actions.NMAction]" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#getCommandKey" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getCommandKey():javax.swing.KeyStroke"></a>
+      <a id="getCommandKey():KeyStroke"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getCommandKey</span><span class="params">()</span><span class="result">: <span class="extype" name="javax.swing.KeyStroke">KeyStroke</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getCommandKey():javax.swing.KeyStroke" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@CheckForNull</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#getDescription" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getDescription():String"></a>
+      <a id="getDescription():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getDescription</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getDescription():String" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.DefaultDiagramStateAction#getDiagram" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getDiagram():com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement"></a>
+      <a id="getDiagram():DiagramPresentationElement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getDiagram</span><span class="params">()</span><span class="result">: <span class="extype" name="com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement">DiagramPresentationElement</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getDiagram():com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>DefaultDiagramStateAction</dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.DefaultDiagramStateAction#getFirstSelected" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getFirstSelected():com.nomagic.magicdraw.uml.symbols.PresentationElement"></a>
+      <a id="getFirstSelected():PresentationElement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getFirstSelected</span><span class="params">()</span><span class="result">: <span class="extype" name="com.nomagic.magicdraw.uml.symbols.PresentationElement">PresentationElement</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getFirstSelected():com.nomagic.magicdraw.uml.symbols.PresentationElement" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>DefaultDiagramStateAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#getGroup" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getGroup():String"></a>
+      <a id="getGroup():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getGroup</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getGroup():String" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#getID" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getID():String"></a>
+      <a id="getID():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getID</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getID():String" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#getIcon" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getIcon():javax.swing.Icon"></a>
+      <a id="getIcon():Icon"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getIcon</span><span class="params">()</span><span class="result">: <span class="extype" name="javax.swing.Icon">Icon</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getIcon():javax.swing.Icon" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="javax.swing.AbstractAction#getKeys" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getKeys():Array[Object]"></a>
+      <a id="getKeys():Array[AnyRef]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getKeys</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.AnyRef">AnyRef</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getKeys():Array[Object]" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractAction</dd></dl></div>
+    </li><li name="gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction#getLargeIcon" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getLargeIcon():javax.swing.Icon"></a>
+      <a id="getLargeIcon():Icon"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getLargeIcon</span><span class="params">()</span><span class="result">: <span class="extype" name="javax.swing.Icon">Icon</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getLargeIcon():javax.swing.Icon" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction">EnhancedDrawPathAction</a> → NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#getMnemonicKey" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getMnemonicKey():Int"></a>
+      <a id="getMnemonicKey():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getMnemonicKey</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getMnemonicKey():Int" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#getName" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getName():String"></a>
+      <a id="getName():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getName</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getName():String" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#getPropertyChangeListeners" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getPropertyChangeListeners():Array[java.beans.PropertyChangeListener]"></a>
+      <a id="getPropertyChangeListeners():Array[PropertyChangeListener]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getPropertyChangeListeners</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.beans.PropertyChangeListener">PropertyChangeListener</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getPropertyChangeListeners():Array[java.beans.PropertyChangeListener]" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction → AbstractAction</dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.DefaultDiagramStateAction#getSelected" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getSelected():java.util.List"></a>
+      <a id="getSelected():List"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getSelected</span><span class="params">()</span><span class="result">: <span class="extype" name="java.util.List">List</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getSelected():java.util.List" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>DefaultDiagramStateAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#getShortcuts" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getShortcuts():java.util.List[javax.swing.KeyStroke]"></a>
+      <a id="getShortcuts():List[KeyStroke]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getShortcuts</span><span class="params">()</span><span class="result">: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="javax.swing.KeyStroke">KeyStroke</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getShortcuts():java.util.List[javax.swing.KeyStroke]" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#getSmallIcon" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getSmallIcon():javax.swing.Icon"></a>
+      <a id="getSmallIcon():Icon"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getSmallIcon</span><span class="params">()</span><span class="result">: <span class="extype" name="javax.swing.Icon">Icon</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getSmallIcon():javax.swing.Icon" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMStateAction#getState" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getState():Boolean"></a>
+      <a id="getState():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getState</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getState():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMStateAction</dd></dl></div>
+    </li><li name="javax.swing.AbstractAction#getValue" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getValue(x$1:String):Object"></a>
+      <a id="getValue(String):AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getValue</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getValue(x$1:String):Object" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractAction → Action</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction → AnyRef → Any</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMStateAction#isDistinguish" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isDistinguish():Boolean"></a>
+      <a id="isDistinguish():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isDistinguish</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@isDistinguish():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMStateAction</dd></dl></div>
+    </li><li name="javax.swing.AbstractAction#isEnabled" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isEnabled():Boolean"></a>
+      <a id="isEnabled():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isEnabled</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@isEnabled():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractAction → Action</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMStateAction#isGrouped" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isGrouped():Boolean"></a>
+      <a id="isGrouped():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isGrouped</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@isGrouped():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMStateAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#isIDGenerated" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isIDGenerated():Boolean"></a>
+      <a id="isIDGenerated():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isIDGenerated</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@isIDGenerated():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="javax.swing.AbstractAction#putValue" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="putValue(x$1:String,x$2:Any):Unit"></a>
+      <a id="putValue(String,Any):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">putValue</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.lang.String">String</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@putValue(x$1:String,x$2:Any):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractAction → Action</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#removeAction" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="removeAction(x$1:com.nomagic.actions.NMAction):Unit"></a>
+      <a id="removeAction(NMAction):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">removeAction</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="com.nomagic.actions.NMAction">NMAction</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@removeAction(x$1:com.nomagic.actions.NMAction):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#removePropertyChangeListener" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="removePropertyChangeListener(x$1:java.beans.PropertyChangeListener):Unit"></a>
+      <a id="removePropertyChangeListener(PropertyChangeListener):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">removePropertyChangeListener</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.beans.PropertyChangeListener">PropertyChangeListener</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@removePropertyChangeListener(x$1:java.beans.PropertyChangeListener):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction → AbstractAction → Action</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#removeShortcut" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="removeShortcut(x$1:javax.swing.KeyStroke):Unit"></a>
+      <a id="removeShortcut(KeyStroke):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">removeShortcut</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="javax.swing.KeyStroke">KeyStroke</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@removeShortcut(x$1:javax.swing.KeyStroke):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#removeWeakPropertyChangeListener" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="removeWeakPropertyChangeListener(x$1:java.beans.PropertyChangeListener):Unit"></a>
+      <a id="removeWeakPropertyChangeListener(PropertyChangeListener):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">removeWeakPropertyChangeListener</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.beans.PropertyChangeListener">PropertyChangeListener</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@removeWeakPropertyChangeListener(x$1:java.beans.PropertyChangeListener):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#setActions" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setActions(x$1:java.util.List[_&lt;:com.nomagic.actions.NMAction]):Unit"></a>
+      <a id="setActions(List[_&lt;:NMAction]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setActions</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.util.List">List</span>[_ &lt;: <span class="extype" name="com.nomagic.actions.NMAction">NMAction</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setActions(x$1:java.util.List[_&lt;:com.nomagic.actions.NMAction]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#setDescription" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setDescription(x$1:String):Unit"></a>
+      <a id="setDescription(String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setDescription</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setDescription(x$1:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.DefaultDiagramStateAction#setDiagram" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setDiagram(x$1:com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement):Unit"></a>
+      <a id="setDiagram(DiagramPresentationElement):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setDiagram</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement">DiagramPresentationElement</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setDiagram(x$1:com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DefaultDiagramStateAction → DiagramAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMStateAction#setDistinguish" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setDistinguish(x$1:Boolean):Unit"></a>
+      <a id="setDistinguish(Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setDistinguish</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setDistinguish(x$1:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMStateAction</dd></dl></div>
+    </li><li name="javax.swing.AbstractAction#setEnabled" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setEnabled(x$1:Boolean):Unit"></a>
+      <a id="setEnabled(Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setEnabled</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setEnabled(x$1:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractAction → Action</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#setGroup" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setGroup(x$1:String):Unit"></a>
+      <a id="setGroup(String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setGroup</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setGroup(x$1:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$actions.html" class="extype" name="com.nomagic.actions">com.nomagic.actions</a>] </dd><dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMStateAction#setGrouped" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setGrouped(x$1:Boolean):Unit"></a>
+      <a id="setGrouped(Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setGrouped</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setGrouped(x$1:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMStateAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#setLargeIcon" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setLargeIcon(x$1:javax.swing.Icon):Unit"></a>
+      <a id="setLargeIcon(Icon):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setLargeIcon</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="javax.swing.Icon">Icon</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setLargeIcon(x$1:javax.swing.Icon):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#setMnemonicKey" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setMnemonicKey(x$1:Int):Unit"></a>
+      <a id="setMnemonicKey(Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setMnemonicKey</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setMnemonicKey(x$1:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#setName" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setName(x$1:String):Unit"></a>
+      <a id="setName(String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setName</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setName(x$1:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#setShortcuts" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setShortcuts(x$1:java.util.List[javax.swing.KeyStroke]):Unit"></a>
+      <a id="setShortcuts(List[KeyStroke]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setShortcuts</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="javax.swing.KeyStroke">KeyStroke</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setShortcuts(x$1:java.util.List[javax.swing.KeyStroke]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#setSmallIcon" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setSmallIcon(x$1:javax.swing.Icon):Unit"></a>
+      <a id="setSmallIcon(Icon):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setSmallIcon</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="javax.swing.Icon">Icon</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setSmallIcon(x$1:javax.swing.Icon):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMStateAction#setState" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setState(x$1:Boolean):Unit"></a>
+      <a id="setState(Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setState</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setState(x$1:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMStateAction</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#shallowClone" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="shallowClone():Object"></a>
+      <a id="shallowClone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">shallowClone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@shallowClone():Object" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction</dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.nomagic.actions.NMAction#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@toString():String" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NMAction → AnyRef → Any</dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction#updateState" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="updateState():Unit"></a>
+      <a id="updateState():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">updateState</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@updateState():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>BaseDiagramAction → MDStateAction → NMAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@OpenApi</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Deprecated Value Members</h3>
+              <ol><li name="com.nomagic.magicdraw.ui.actions.DrawPathDiagramAction#createAdditionalDrawAction" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="createAdditionalDrawAction():com.nomagic.magicdraw.uml.symbols.manipulators.drawactions.AdditionalDrawAction"></a>
+      <a id="createAdditionalDrawAction():AdditionalDrawAction"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) see corresponding Javadoc for more information.">createAdditionalDrawAction</span><span class="params">()</span><span class="result">: <span class="extype" name="com.nomagic.magicdraw.uml.symbols.manipulators.drawactions.AdditionalDrawAction">AdditionalDrawAction</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@createAdditionalDrawAction():com.nomagic.magicdraw.uml.symbols.manipulators.drawactions.AdditionalDrawAction" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>DrawPathDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@InternalApi</span><span class="args">()</span>
+              
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> see corresponding Javadoc for more information.</p></dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.DrawPathDiagramAction#createCreatableClientElements" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="createCreatableClientElements():com.nomagic.magicdraw.uml.symbols.manipulators.n"></a>
+      <a id="createCreatableClientElements():n"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) see corresponding Javadoc for more information.">createCreatableClientElements</span><span class="params">()</span><span class="result">: <span class="extype" name="com.nomagic.magicdraw.uml.symbols.manipulators.n">n</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@createCreatableClientElements():com.nomagic.magicdraw.uml.symbols.manipulators.n" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>DrawPathDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@InternalApi</span><span class="args">()</span>
+              
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> see corresponding Javadoc for more information.</p></dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.DrawPathDiagramAction#createCreatableSupplierElements" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="createCreatableSupplierElements():com.nomagic.magicdraw.uml.symbols.manipulators.n"></a>
+      <a id="createCreatableSupplierElements():n"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) see corresponding Javadoc for more information.">createCreatableSupplierElements</span><span class="params">()</span><span class="result">: <span class="extype" name="com.nomagic.magicdraw.uml.symbols.manipulators.n">n</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@createCreatableSupplierElements():com.nomagic.magicdraw.uml.symbols.manipulators.n" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>DrawPathDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@InternalApi</span><span class="args">()</span>
+              
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> see corresponding Javadoc for more information.</p></dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.DrawPathDiagramAction#createPathElement" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="createPathElement():com.nomagic.magicdraw.uml.symbols.paths.PathElement"></a>
+      <a id="createPathElement():PathElement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) see corresponding Javadoc for more information.">createPathElement</span><span class="params">()</span><span class="result">: <span class="extype" name="com.nomagic.magicdraw.uml.symbols.paths.PathElement">PathElement</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@createPathElement():com.nomagic.magicdraw.uml.symbols.paths.PathElement" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>DrawPathDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@InternalApi</span><span class="args">()</span>
+              
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> see corresponding Javadoc for more information.</p></dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction#getCanvas" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getCanvas():com.nomagic.magicdraw.ui.DiagramCanvas"></a>
+      <a id="getCanvas():DiagramCanvas"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) see corresponding Javadoc for more information.">getCanvas</span><span class="params">()</span><span class="result">: <span class="extype" name="com.nomagic.magicdraw.ui.DiagramCanvas">DiagramCanvas</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getCanvas():com.nomagic.magicdraw.ui.DiagramCanvas" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>BaseDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@InternalApi</span><span class="args">()</span>
+              
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> see corresponding Javadoc for more information.</p></dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction#getDiagramActionsExecuter" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getDiagramActionsExecuter():com.nomagic.magicdraw.ui.actions.DiagramActionsExecuter"></a>
+      <a id="getDiagramActionsExecuter():DiagramActionsExecuter"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) see corresponding Javadoc for more information.">getDiagramActionsExecuter</span><span class="params">()</span><span class="result">: <span class="extype" name="com.nomagic.magicdraw.ui.actions.DiagramActionsExecuter">DiagramActionsExecuter</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getDiagramActionsExecuter():com.nomagic.magicdraw.ui.actions.DiagramActionsExecuter" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>BaseDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@InternalApi</span><span class="args">()</span>
+              
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> see corresponding Javadoc for more information.</p></dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction#getElementCreatorInfo" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getElementCreatorInfo():com.nomagic.magicdraw.ui.actions.DiagramActionsExecuter.ElementCreatorInfo"></a>
+      <a id="getElementCreatorInfo():ElementCreatorInfo"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) see corresponding Javadoc for more information.">getElementCreatorInfo</span><span class="params">()</span><span class="result">: <span class="extype" name="com.nomagic.magicdraw.ui.actions.DiagramActionsExecuter.ElementCreatorInfo">ElementCreatorInfo</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getElementCreatorInfo():com.nomagic.magicdraw.ui.actions.DiagramActionsExecuter.ElementCreatorInfo" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>BaseDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@InternalApi</span><span class="args">()</span>
+              
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> see corresponding Javadoc for more information.</p></dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction#getNameSpace" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getNameSpace():com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Namespace"></a>
+      <a id="getNameSpace():Namespace"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) see corresponding Javadoc for more information.">getNameSpace</span><span class="params">()</span><span class="result">: <span class="extype" name="com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Namespace">Namespace</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@getNameSpace():com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Namespace" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>BaseDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@InternalApi</span><span class="args">()</span>
+              
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> see corresponding Javadoc for more information.</p></dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction#isAllowedToCreateSymbol" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isAllowedToCreateSymbol():Boolean"></a>
+      <a id="isAllowedToCreateSymbol():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) see corresponding Javadoc for more information.">isAllowedToCreateSymbol</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@isAllowedToCreateSymbol():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>BaseDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@InternalApi</span><span class="args">()</span>
+              
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> see corresponding Javadoc for more information.</p></dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction#isEnabledInRODiagram" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isEnabledInRODiagram():Boolean"></a>
+      <a id="isEnabledInRODiagram():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) see corresponding Javadoc for more information.">isEnabledInRODiagram</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@isEnabledInRODiagram():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>BaseDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@InternalApi</span><span class="args">()</span>
+              
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> see corresponding Javadoc for more information.</p></dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction#replaceState" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="replaceState():Unit"></a>
+      <a id="replaceState():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) see corresponding Javadoc for more information.">replaceState</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@replaceState():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../com$nomagic$magicdraw$ui$actions.html" class="extype" name="com.nomagic.magicdraw.ui.actions">com.nomagic.magicdraw.ui.actions</a>] </dd><dt>Definition Classes</dt><dd>BaseDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@InternalApi</span><span class="args">()</span>
+              
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> see corresponding Javadoc for more information.</p></dd></dl></div>
+    </li><li name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction#setEnabledInRODiagram" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setEnabledInRODiagram(x$1:Boolean):Unit"></a>
+      <a id="setEnabledInRODiagram(Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version ) see corresponding Javadoc for more information.">setEnabledInRODiagram</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction@setEnabledInRODiagram(x$1:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>BaseDiagramAction</dd><dt>Annotations</dt><dd>
+                <span class="name">@Deprecated</span>
+              
+                <span class="name">@InternalApi</span><span class="args">()</span>
+              
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version )</i> see corresponding Javadoc for more information.</p></dd></dl></div>
+    </li></ol>
+            </div>
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="com.nomagic.magicdraw.ui.actions.DrawPathDiagramAction">
+              <h3>Inherited from <span class="extype" name="com.nomagic.magicdraw.ui.actions.DrawPathDiagramAction">DrawPathDiagramAction</span></h3>
+            </div><div class="parent" name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction">
+              <h3>Inherited from <span class="extype" name="com.nomagic.magicdraw.ui.actions.BaseDiagramAction">BaseDiagramAction</span></h3>
+            </div><div class="parent" name="com.nomagic.magicdraw.ui.actions.DefaultDiagramStateAction">
+              <h3>Inherited from <span class="extype" name="com.nomagic.magicdraw.ui.actions.DefaultDiagramStateAction">DefaultDiagramStateAction</span></h3>
+            </div><div class="parent" name="com.nomagic.magicdraw.actions.DiagramAction">
+              <h3>Inherited from <span class="extype" name="com.nomagic.magicdraw.actions.DiagramAction">DiagramAction</span></h3>
+            </div><div class="parent" name="com.nomagic.magicdraw.actions.MDStateAction">
+              <h3>Inherited from <span class="extype" name="com.nomagic.magicdraw.actions.MDStateAction">MDStateAction</span></h3>
+            </div><div class="parent" name="com.nomagic.actions.NMStateAction">
+              <h3>Inherited from <span class="extype" name="com.nomagic.actions.NMStateAction">NMStateAction</span></h3>
+            </div><div class="parent" name="com.nomagic.actions.NMAction">
+              <h3>Inherited from <span class="extype" name="com.nomagic.actions.NMAction">NMAction</span></h3>
+            </div><div class="parent" name="java.lang.Comparable">
+              <h3>Inherited from <span class="extype" name="java.lang.Comparable">Comparable</span>[<span class="extype" name="java.lang.Comparable.T">T</span>]</h3>
+            </div><div class="parent" name="javax.swing.AbstractAction">
+              <h3>Inherited from <span class="extype" name="javax.swing.AbstractAction">AbstractAction</span></h3>
+            </div><div class="parent" name="java.io.Serializable">
+              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="java.lang.Cloneable">
+              <h3>Inherited from <span class="extype" name="java.lang.Cloneable">Cloneable</span></h3>
+            </div><div class="parent" name="javax.swing.Action">
+              <h3>Inherited from <span class="extype" name="javax.swing.Action">Action</span></h3>
+            </div><div class="parent" name="java.awt.event.ActionListener">
+              <h3>Inherited from <span class="extype" name="java.awt.event.ActionListener">ActionListener</span></h3>
+            </div><div class="parent" name="java.util.EventListener">
+              <h3>Inherited from <span class="extype" name="java.util.EventListener">EventListener</span></h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
