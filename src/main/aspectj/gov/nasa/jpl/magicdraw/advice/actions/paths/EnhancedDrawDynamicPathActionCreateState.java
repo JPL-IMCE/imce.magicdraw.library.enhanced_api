@@ -18,8 +18,6 @@
 
 package gov.nasa.jpl.magicdraw.advice.actions.paths;
 
-import gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction;
-
 import javax.swing.Icon;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -37,7 +35,7 @@ public class EnhancedDrawDynamicPathActionCreateState {
       "within(gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction) && "+
       "target(gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction) && "+
       "this(that) && execution(com.nomagic.magicdraw.ui.states.State *.createState())")
-	public void enhancedDrawPathActionCreateState(EnhancedDrawPathAction that) {}
+	public void enhancedDrawPathActionCreateState(gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction that) {}
 
 	@Pointcut(
       "call(com.nomagic.magicdraw.ui.states.SymbolDrawState.new"+
@@ -55,7 +53,7 @@ public class EnhancedDrawDynamicPathActionCreateState {
       "createSymbolDrawStateWithoutIcon(dc, pe, sdm)")
 	public com.nomagic.magicdraw.ui.states.SymbolDrawState createSymbolDrawStateWithIcon(
 			ProceedingJoinPoint pjp,
-			EnhancedDrawPathAction that,
+			gov.nasa.jpl.magicdraw.enhanced.actions.paths.EnhancedDrawPathAction that,
 			com.nomagic.magicdraw.ui.DiagramCanvas dc,
 			PresentationElement pe,
 			com.nomagic.magicdraw.uml.symbols.manipulators.SymbolDrawManipulator sdm) throws Throwable {
