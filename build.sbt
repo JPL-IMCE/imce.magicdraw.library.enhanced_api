@@ -72,11 +72,11 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
         % "18.0-sp6.2"
         % "compile"
         artifacts
-        Artifact("com.nomagic.magicdraw.package", "pom", "pom", None, Seq(), None, Map()),
+        Artifact("com.nomagic.magicdraw.package", "pom", "pom"),
 
       "gov.nasa.jpl.imce" %% "imce.third_party.aspectj_libraries" % Versions_aspectj_libraries.version
         % "compile" artifacts
-        Artifact("imce.third_party.aspectj_libraries", "zip", "zip", Some("resource"), Seq(), None, Map())
+        Artifact("imce.third_party.aspectj_libraries", "zip", "zip", "resource")
     ),
 
     extractArchives := {
