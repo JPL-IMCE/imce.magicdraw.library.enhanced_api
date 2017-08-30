@@ -1,2 +1,6 @@
 // https://github.com/alexarchambault/coursier
-addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-M15")
+//addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-RC10")
+libraryDependencies ++= Seq(
+  "io.get-coursier" %% "coursier" % "1.0.0-RC10",
+  "io.get-coursier" %% "coursier-cache" % "1.0.0-RC10"
+)

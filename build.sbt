@@ -24,10 +24,10 @@ mdInstallDirectory in ThisBuild :=
 
 cleanFiles += (mdInstallDirectory in ThisBuild).value
 
+val extractArchives: TaskKey[Unit] = TaskKey[Unit]("extract-archives", "Extracts ZIP files")
+
 lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
   .enablePlugins(IMCEGitPlugin)
-  .enablePlugins(IMCEReleasePlugin)
-  .settings(IMCEReleasePlugin.libraryReleaseProcessSettings)
   .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
   .settings(IMCEPlugin.aspectJSettings)
   .settings(
@@ -60,7 +60,10 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
     resolvers += Resolver.bintrayRepo("tiwg", "org.omg.tiwg.vendor.nomagic"),
     resolvers += "Artima Maven Repository" at "http://repo.artima.com/releases",
 
+    scalacOptions in (Compile, compile) += s"-P:artima-supersafe:config-file:${baseDirectory.value}/project/supersafe.cfg",
+    scalacOptions in (Test, compile) += s"-P:artima-supersafe:config-file:${baseDirectory.value}/project/supersafe.cfg",
     scalacOptions in (Compile, doc) += "-Xplugin-disable:artima-supersafe",
+    scalacOptions in (Test, doc) += "-Xplugin-disable:artima-supersafe",
 
     // ignore scaladoc warnings about AspectJ tags.
     scalacOptions in (Compile, doc) -= "-Xfatal-warnings",
@@ -69,7 +72,7 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
 
       "org.omg.tiwg.vendor.nomagic"
         % "com.nomagic.magicdraw.package"
-        % "18.0-sp6.2"
+        % "18.4-sp1.0"
         % "compile"
         artifacts
         Artifact("com.nomagic.magicdraw.package", "pom", "pom"),
