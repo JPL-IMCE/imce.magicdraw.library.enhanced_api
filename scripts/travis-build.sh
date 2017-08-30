@@ -13,4 +13,7 @@ t=$(git name-rev --tags --name-only $(git rev-parse HEAD))
 
 . $(dirname $0)/travis-decode.sh
 
-sbt -jvm-opts travis/jvmopts.compile compile test
+sbt \
+    -jvm-opts travis/jvmopts.compile \
+    -DMagicDrawDownloader.progress=false \
+    compile test

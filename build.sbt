@@ -87,7 +87,7 @@ lazy val root = Project("imce-magicdraw-library-enhanced_api", file("."))
       val up = update.value
       val s = streams.value
       val mdInstallDir = (mdInstallDirectory in ThisBuild).value
-      val showDownloadProgress = true
+      val showDownloadProgress = "true" == System.getProperty("MagicDrawDownloader.progress", "true")
 
       if (!mdInstallDir.exists) {
 
