@@ -9,12 +9,12 @@
 <g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 917.847)">
 <title>dependency&#45;graph</title>
 <polygon fill="white" stroke="white" points="-4,5 -4,-917.847 2839,-917.847 2839,5 -4,5"/>
-<!-- gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.2 -->
-<g id="node1" class="node"><title>gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.2</title>
+<!-- gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.3 -->
+<g id="node1" class="node"><title>gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.3</title>
 <ellipse fill="none" stroke="black" cx="221" cy="-129" rx="220.117" ry="41.7193"/>
 <text text-anchor="start" x="162" y="-144.233" font-family="Times Roman,serif" font-size="14.00">gov.nasa.jpl.imce</text>
 <text text-anchor="start" x="73.5" y="-127.433" font-family="Times Roman,serif" font-size="14.00">imce.magicdraw.library.enhanced_api_2.11</text>
-<text text-anchor="start" x="202.5" y="-110.633" font-family="Times Roman,serif" font-size="14.00">5.2.2</text>
+<text text-anchor="start" x="202.5" y="-110.633" font-family="Times Roman,serif" font-size="14.00">5.2.3</text>
 </g>
 <!-- gov.nasa.jpl.imce:imce.third_party.aspectj_libraries_2.11:3.0.8 -->
 <g id="node2" class="node"><title>gov.nasa.jpl.imce:imce.third_party.aspectj_libraries_2.11:3.0.8</title>
@@ -23,8 +23,8 @@
 <text text-anchor="start" x="547.5" y="-311.433" font-family="Times Roman,serif" font-size="14.00">imce.third_party.aspectj_libraries_2.11</text>
 <text text-anchor="start" x="661.5" y="-294.633" font-family="Times Roman,serif" font-size="14.00">3.0.8</text>
 </g>
-<!-- gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.2&#45;&gt;gov.nasa.jpl.imce:imce.third_party.aspectj_libraries_2.11:3.0.8 -->
-<g id="edge2" class="edge"><title>gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.2&#45;&gt;gov.nasa.jpl.imce:imce.third_party.aspectj_libraries_2.11:3.0.8</title>
+<!-- gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.3&#45;&gt;gov.nasa.jpl.imce:imce.third_party.aspectj_libraries_2.11:3.0.8 -->
+<g id="edge2" class="edge"><title>gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.3&#45;&gt;gov.nasa.jpl.imce:imce.third_party.aspectj_libraries_2.11:3.0.8</title>
 <path fill="none" stroke="black" d="M313.885,-166.235C390.913,-197.113 500.221,-240.932 579.326,-272.643"/>
 <polygon fill="black" stroke="black" points="578.235,-275.976 588.819,-276.448 580.839,-269.479 578.235,-275.976"/>
 </g>
@@ -35,8 +35,8 @@
 <text text-anchor="start" x="565.5" y="-39.4333" font-family="Times Roman,serif" font-size="14.00">com.nomagic.magicdraw.package</text>
 <text text-anchor="start" x="642.5" y="-22.6333" font-family="Times Roman,serif" font-size="14.00">18.4&#45;sp1.0</text>
 </g>
-<!-- gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.2&#45;&gt;org.omg.tiwg.vendor.nomagic:com.nomagic.magicdraw.package:18.4&#45;sp1.0 -->
-<g id="edge32" class="edge"><title>gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.2&#45;&gt;org.omg.tiwg.vendor.nomagic:com.nomagic.magicdraw.package:18.4&#45;sp1.0</title>
+<!-- gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.3&#45;&gt;org.omg.tiwg.vendor.nomagic:com.nomagic.magicdraw.package:18.4&#45;sp1.0 -->
+<g id="edge32" class="edge"><title>gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.3&#45;&gt;org.omg.tiwg.vendor.nomagic:com.nomagic.magicdraw.package:18.4&#45;sp1.0</title>
 <path fill="none" stroke="black" d="M374.798,-99.5137C426.455,-89.6099 483.875,-78.6012 534.847,-68.8288"/>
 <polygon fill="black" stroke="black" points="535.79,-72.2119 544.952,-66.8915 534.472,-65.3371 535.79,-72.2119"/>
 </g>
@@ -47,8 +47,8 @@
 <text text-anchor="start" x="1077.5" y="-177.433" font-family="Times Roman,serif" font-size="14.00">aspectjrt</text>
 <text text-anchor="start" x="1089.5" y="-160.633" font-family="Times Roman,serif" font-size="14.00">1.8.9</text>
 </g>
-<!-- gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.2&#45;&gt;org.aspectj:aspectjrt:1.8.9 -->
-<g id="edge34" class="edge"><title>gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.2&#45;&gt;org.aspectj:aspectjrt:1.8.9</title>
+<!-- gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.3&#45;&gt;org.aspectj:aspectjrt:1.8.9 -->
+<g id="edge36" class="edge"><title>gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.3&#45;&gt;org.aspectj:aspectjrt:1.8.9</title>
 <path fill="none" stroke="black" d="M432.05,-140.897C625.309,-151.791 900.657,-167.312 1032.27,-174.731"/>
 <polygon fill="black" stroke="black" points="1032.08,-178.226 1042.26,-175.294 1032.47,-171.237 1032.08,-178.226"/>
 </g>
@@ -59,8 +59,8 @@
 <text text-anchor="start" x="1404" y="-317.433" font-family="Times Roman,serif" font-size="14.00">scalac&#45;scapegoat&#45;plugin_2.11</text>
 <text text-anchor="start" x="1486.5" y="-300.633" font-family="Times Roman,serif" font-size="14.00">1.0.0</text>
 </g>
-<!-- gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.2&#45;&gt;com.sksamuel.scapegoat:scalac&#45;scapegoat&#45;plugin_2.11:1.0.0 -->
-<g id="edge46" class="edge"><title>gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.2&#45;&gt;com.sksamuel.scapegoat:scalac&#45;scapegoat&#45;plugin_2.11:1.0.0</title>
+<!-- gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.3&#45;&gt;com.sksamuel.scapegoat:scalac&#45;scapegoat&#45;plugin_2.11:1.0.0 -->
+<g id="edge48" class="edge"><title>gov.nasa.jpl.imce:imce.magicdraw.library.enhanced_api_2.11:5.2.3&#45;&gt;com.sksamuel.scapegoat:scalac&#45;scapegoat&#45;plugin_2.11:1.0.0</title>
 <path fill="none" stroke="black" d="M436.893,-120.645C728.343,-110.645 1220.33,-98.7576 1298,-129 1370.47,-157.217 1432.96,-223.978 1469.79,-270.331"/>
 <polygon fill="black" stroke="black" points="1467.22,-272.731 1476.15,-278.447 1472.74,-268.416 1467.22,-272.731"/>
 </g>
@@ -101,12 +101,12 @@
 <polygon fill="black" stroke="black" points="1042.4,-574.702 1052.58,-577.639 1046.46,-568.995 1042.4,-574.702"/>
 </g>
 <!-- gov.nasa.jpl.imce:imce.third_party.aspectj_libraries_2.11:3.0.8&#45;&gt;org.aspectj:aspectjrt:1.8.9 -->
-<g id="edge36" class="edge"><title>gov.nasa.jpl.imce:imce.third_party.aspectj_libraries_2.11:3.0.8&#45;&gt;org.aspectj:aspectjrt:1.8.9</title>
+<g id="edge34" class="edge"><title>gov.nasa.jpl.imce:imce.third_party.aspectj_libraries_2.11:3.0.8&#45;&gt;org.aspectj:aspectjrt:1.8.9</title>
 <path fill="none" stroke="black" d="M776.095,-277.065C819.214,-261.464 870.882,-243.488 918,-229 956.89,-217.042 1000.79,-205.372 1036.59,-196.318"/>
 <polygon fill="black" stroke="black" points="1037.61,-199.669 1046.46,-193.835 1035.91,-192.88 1037.61,-199.669"/>
 </g>
 <!-- gov.nasa.jpl.imce:imce.third_party.aspectj_libraries_2.11:3.0.8&#45;&gt;com.sksamuel.scapegoat:scalac&#45;scapegoat&#45;plugin_2.11:1.0.0 -->
-<g id="edge48" class="edge"><title>gov.nasa.jpl.imce:imce.third_party.aspectj_libraries_2.11:3.0.8&#45;&gt;com.sksamuel.scapegoat:scalac&#45;scapegoat&#45;plugin_2.11:1.0.0</title>
+<g id="edge46" class="edge"><title>gov.nasa.jpl.imce:imce.third_party.aspectj_libraries_2.11:3.0.8&#45;&gt;com.sksamuel.scapegoat:scalac&#45;scapegoat&#45;plugin_2.11:1.0.0</title>
 <path fill="none" stroke="black" d="M867.994,-326.814C884.896,-327.7 901.755,-328.455 918,-329 1086.79,-334.667 1129.16,-333.076 1298,-329 1312.47,-328.651 1327.5,-328.164 1342.56,-327.593"/>
 <polygon fill="black" stroke="black" points="1343.12,-331.073 1352.98,-327.184 1342.85,-324.079 1343.12,-331.073"/>
 </g>
